@@ -1,0 +1,13 @@
+Subject: Chegou uma Mensagem Privada Nova: {SUBJECT}
+
+Olá {USERNAME}, recebeu uma Mensagem Privada Nova na sua conta em "{SITENAME}". Pode ver a mensagem clicando no seguinte endereço: {U_VIEW_MESSAGE}
+_____________________________________________________________________
+
+De: {AUTHOR_NAME}
+Assunto: {SUBJECT}
+Mensagem:
+{MESSAGE}
+_____________________________________________________________________
+
+Pediu para ser notificado sempre que ocorra este evento; Lembre-se que pode escolher não ser notificado quando recebe mensagens novas mudando a opção para o efeito no seu "Perfil".
+{EMAIL_SIG}

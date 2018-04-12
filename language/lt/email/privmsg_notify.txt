@@ -1,0 +1,14 @@
+Subject: Jūs gavote naują asmeninę žinutę: {SUBJECT}
+
+Sveiki {USERNAME}!
+"{SITENAME}" diskusijose nuo vartotojo {AUTHOR_NAME} jūs gavote naują asmeninę žinutę. Norėdami ją perskaityti paspauskite ant nuorodos žemiau: {U_VIEW_MESSAGE}
+_____________________________________________________________________
+Nuo: {AUTHOR_NAME}
+Tema: {SUBJECT}
+Tekstas:
+{MESSAGE}
+_____________________________________________________________________
+
+Atsiminkite, kad visada galite išjungti laiško apie naujas asmenines
+žinutes siuntimą per savo aprašymą.
+{EMAIL_SIG}

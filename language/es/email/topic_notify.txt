@@ -1,0 +1,16 @@
+Subject: Notificación de respuesta en "{TOPIC_TITLE}"
+
+Buenos días {USERNAME}: El tema "{TOPIC_TITLE}" en "{SITENAME}" ha recibido una nueva respuesta desde su última visita. Puede leerla haciendo clic en este enlace: {U_NEWEST_POST}
+_____________________________________________________________________
+Tema: {TOPIC_TITLE}
+Autor: {AUTHOR_NAME}
+Mensaje:
+{MESSAGE}
+_____________________________________________________________________
+
+Si quiere leer el tema globalmente, utilice este enlace:
+{U_TOPIC}
+
+<!-- IF S_VISIT_MSG -->No se enviarán más notificaciones hasta que usted visite el tema. <!-- ENDIF-->Si desea dejar de seguir este tema, puede seleccionar el enlace "No seguir Tema" situado en el foro mencionado o hacer clic sobre este enlace:
+{U_STOP_WATCHING_TOPIC}
+{EMAIL_SIG}

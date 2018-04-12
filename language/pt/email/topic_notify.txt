@@ -1,0 +1,16 @@
+Subject: Notificação de Resposta a Tópico - "{TOPIC_TITLE}"
+
+Olá {USERNAME}, o tópico "{TOPIC_TITLE}" a "{SITENAME}" recebeu uma nova resposta desde sua última visita. Você pode ver este post, clicando no seguinte link: {U_NEWEST_POST}
+_____________________________________________________________________
+Tópico: {TOPIC_TITLE}
+Autor: {AUTHOR_NAME}
+Mensagem:
+{MESSAGE}
+_____________________________________________________________________
+
+Se pretender ver o tópico, clique no seguinte link:
+{U_TOPIC}
+
+<!-- IF S_VISIT_MSG -->Não serão enviadas mais notificações  até que visite o tópico. <!-- ENDIF-->Caso não pretenda continuar a observar este tópico, poderá clicar em "Parar de observar este tópico" no tópico mencionado ou clicar no link que se segue:
+{U_STOP_WATCHING_TOPIC}
+{EMAIL_SIG}

@@ -1,0 +1,12 @@
+Subject: Nuovo messaggio privato: {SUBJECT}
+
+Ciao {USERNAME}; hai ricevuto un nuovo messaggio privato sul tuo account su "{SITENAME}". Puoi leggere il messaggio cliccando sul seguente link: {U_VIEW_MESSAGE}
+_____________________________________________________________________
+Da: {AUTHOR_NAME}
+Oggetto: {SUBJECT}
+Messaggio:
+{MESSAGE}
+_____________________________________________________________________
+
+Hai richiesto di essere avvisato per questi eventi: ricorda che puoi sempre scegliere di non ricevere avvisi per i nuovi messaggi cambiando le impostazioni nel tuo profilo.
+{EMAIL_SIG}

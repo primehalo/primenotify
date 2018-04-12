@@ -1,0 +1,26 @@
+{
+   "name": "primehalo/primenotify",
+   "type": "phpbb-extension",
+   "description": "",
+   "homepage": "http://www.absoluteanime.com/admin/mods.htm",
+   "version": "1.0.0 Beta 3",
+   "time": "2018-04-11",
+   "license": "GPL-2.0",
+   "authors": [
+      {
+         "name": "Ken F. Innes IV",
+         "email": "primehalo@gmail.com",
+         "homepage": "https://www.absoluteanime.com/",
+         "role": "Developer"
+      }
+   ],
+   "require": {
+      "php": ">=5.3.3"
+   },
+   "extra": {
+      "display-name": "Prime Notify",
+      "soft-require": {
+         "phpbb/phpbb": ">=3.2.1,<3.3.0@dev"
+      }
+   }
+}

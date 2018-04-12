@@ -1,0 +1,13 @@
+Subject: Nouveau message prive : {SUBJECT}
+
+Bonjour {USERNAME}, vous avez recu un nouveau message prive sur votre compte sur le site Å· {SITENAME} Å‚. Vous pouvez acceder au message en cliquant sur le lien suivant : {U_VIEW_MESSAGE}
+_____________________________________________________________________
+
+De : {AUTHOR_NAME}
+Sujet : {SUBJECT}
+Message :
+{MESSAGE}
+_____________________________________________________________________
+
+Vous avez demande a etre notifie sur cet evenement ; souvenez-vous qu'il est toujours possible de ne plus recevoir ces notifications en modifiant le parametre approprie dans votre profil.
+{EMAIL_SIG}

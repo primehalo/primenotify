@@ -1,0 +1,13 @@
+Subject: Notificación de nuevo tema en {FORUM_NAME}
+
+Buenos días {USERNAME}: El foro "{FORUM_NAME}" de "{SITENAME}" ha recibido un nuevo tema desde su última visita. Puede visitar el foro haciendo clic en el siguiente enlace: {U_FORUM}
+_____________________________________________________________________
+Tema: {TOPIC_TITLE}
+Autor: {AUTHOR_NAME}
+Mensaje:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->No se enviarán más notificaciones hasta que usted visite el foro. <!-- ENDIF-->Si desea dejar de seguir este foro, puede seleccionar el enlace "Cancelar suscripción al Foro" situado en el foro mencionado o hacer clic sobre este enlace:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

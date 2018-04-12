@@ -1,0 +1,13 @@
+Subject: Notificação de Mensagem no Fórum - {FORUM_NAME}
+
+Olá {USERNAME}, recebeu este email porque está a observar o fórum, "{FORUM_NAME}" em "{SITENAME}" que recebeu uma nova resposta desde a sua última visita. Pode ver este tópico clicando no seguinte link: {U_FORUM}
+_____________________________________________________________________
+Tópico: {TOPIC_TITLE}
+Autor: {AUTHOR_NAME}
+Mensagem:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Não serão enviadas mais notificações  até que visite o fórum. <!-- ENDIF-->Caso não pretenda continuar a observar este tópico, tanto poderá clicar em "Parar de observar este fórum" no tópico mencionado, ou clicar no atalho que se segue:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

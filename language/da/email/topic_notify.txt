@@ -1,0 +1,16 @@
+Subject: Advisering om indlæg i emne - "{TOPIC_TITLE}"
+
+Hej {USERNAME}, emner "{TOPIC_TITLE}" på "{SITENAME}" har modtaget et indlæg siden dit sidste besøg. Du kan bruge følgende link for at se det nye indlæg: {U_NEWEST_POST}
+_____________________________________________________________________
+Emne: {TOPIC_TITLE}
+Forfatter: {AUTHOR_NAME}
+Besked:
+{MESSAGE}
+_____________________________________________________________________
+
+Hvis du ønsker at se emnet, klik på følgende link:
+{U_TOPIC}
+
+<!-- IF S_VISIT_MSG -->Du vil ikke modtage flere adviseringer vedrørende dette emne, før du har besøgt det. <!-- ENDIF-->Hvis du ikke længere ønsker at overvåge dette emne, kan du enten klikke på "Stop overvågning af emne" linket, som du finder øverst i ovennævnte emne, eller ved at klikke på følgende link:
+{U_STOP_WATCHING_TOPIC}
+{EMAIL_SIG}

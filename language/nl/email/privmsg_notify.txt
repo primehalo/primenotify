@@ -1,0 +1,13 @@
+Subject: Nieuw Privé Bericht: {SUBJECT}
+
+Hallo {USERNAME}, je hebt een nieuw privé bericht ontvangen op "{SITENAME}". Bekijk het nieuwe privé bericht door op deze link te klikken: {U_VIEW_MESSAGE}
+_____________________________________________________________________
+
+Van: {AUTHOR_NAME}
+Onderwerp: {SUBJECT}
+Berichttekst:
+{MESSAGE}
+_____________________________________________________________________
+
+Je hebt ingesteld dat je een email krijgt over privé berichten; Als je geen meldingen meer wilt ontvangen stel je dit in via het gebruikerspaneel op het forum.
+{EMAIL_SIG}

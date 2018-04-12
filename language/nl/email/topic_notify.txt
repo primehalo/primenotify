@@ -1,0 +1,16 @@
+Subject: Nieuw bericht notificatie - "{TOPIC_TITLE}"
+
+Hallo {USERNAME}, op het onderwerp "{TOPIC_TITLE}" op "{SITENAME}" staat een nieuw bericht sinds je laatste bezoek. Bekijk het bericht door op deze link te klikken: {U_NEWEST_POST}
+_____________________________________________________________________
+Bericht: {TOPIC_TITLE}
+Auteur: {AUTHOR_NAME}
+Berichttekst:
+{MESSAGE}
+_____________________________________________________________________
+
+Als je het onderwerp wilt bekijken, klik dan op deze link:
+{U_TOPIC}
+
+<!-- IF S_VISIT_MSG -->Er worden geen notificatie meer gestuurd totdat je het onderwerp bezoekt. <!-- ENDIF-->Als je dit onderwerp niet meer wilt volgen, klik dan bovenaan op "Geen abonnement meer op dit onderwerp" in het forum, of klik op deze link:
+{U_STOP_WATCHING_TOPIC}
+{EMAIL_SIG}

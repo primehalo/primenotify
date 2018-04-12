@@ -1,0 +1,14 @@
+Subject: Notifica nuovo argomento - {FORUM_NAME}
+
+Ciao {USERNAME}.
+Nel forum "{FORUM_NAME}" su "{SITENAME}" è stato pubblicato un nuovo argomento dopo la tua ultima visita. Puoi visualizzarlo cliccando sul seguente link: {U_FORUM}
+_____________________________________________________________________
+Argomento: {TOPIC_TITLE}
+Autore: {AUTHOR_NAME}
+Messaggio:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Nessuna notifica verrà inviata fintanto che non visiterai il Forum. <!-- ENDIF-->Se non desideri più seguire la discussione, clicca sul link "Annulla sottoscrizione forum" che trovi seguendo il link sopraindicato, oppure clicca il seguente link:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

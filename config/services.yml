@@ -1,0 +1,58 @@
+services:
+    primehalo.primenotify.main_listener:
+        class: primehalo\primenotify\event\main_listener
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@language'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@user_loader'
+            - '@notification_manager'
+        tags:
+            - { name: event.listener }
+
+    primehalo.primenotify.notification.type.topic:
+        class: primehalo\primenotify\notification\type\topic
+        decorates: notification.type.topic
+        shared: false
+        parent: notification.type.base
+        calls:
+            - [set_user_loader, ['@user_loader']]
+            - [set_config, ['@config']]
+        tags:
+            - { name: notification.type }
+
+    primehalo.primenotify.notification.type.post:
+        class: primehalo\primenotify\notification\type\post
+        decorates: notification.type.post
+        shared: false
+        parent: notification.type.base
+        calls:
+            - [set_user_loader, ['@user_loader']]
+            - [set_config, ['@config']]
+        tags:
+            - { name: notification.type }
+
+    primehalo.primenotify.notification.type.pm:
+        class: primehalo\primenotify\notification\type\pm
+        decorates: notification.type.pm
+        shared: false
+        parent: notification.type.base
+        calls:
+            - [set_user_loader, ['@user_loader']]
+            - [set_config, ['@config']]
+        tags:
+            - { name: notification.type }
+
+    primehalo.primenotify.notification.method.email:
+        class: primehalo\primenotify\notification\method\email
+        decorates: notification.method.email
+        shared: false
+        arguments:
+            - '@user_loader'
+            - '@user'
+            - '@config'
+            - '%core.root_path%'
+            - '%core.php_ext%'

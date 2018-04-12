@@ -1,0 +1,13 @@
+Subject: Notification de nouveau message - {FORUM_NAME}
+
+Bonjour {USERNAME}, un nouveau message a ete poste dans le forum �� {FORUM_NAME} �� sur le site �� {SITENAME} �� depuis votre derniere visite. Vous pouvez acceder au forum en cliquant sur le lien suivant : {U_FORUM}
+_____________________________________________________________________
+Sujet : {TOPIC_TITLE}
+Auteur : {AUTHOR_NAME}
+Message :
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Aucune nouvelle notification ne vous sera envoyée jusqu’à votre prochaine visite sur le forum. <!-- ENDIF-->Si vous souhaitez ne plus surveiller ce forum, cliquez sur le lien �� Se desabonner au forum �� sur la page du forum, ou cliquez sur le lien suivant :
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

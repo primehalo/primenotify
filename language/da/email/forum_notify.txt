@@ -1,0 +1,13 @@
+Subject: Advisering om indlæg i forum - {FORUM_NAME}
+
+Hej {USERNAME}, forummet "{FORUM_NAME}"  på "{SITENAME}" har modtaget et svar siden dit sidste besøg. Du kan anvende følgende link til for at se forummet: {U_FORUM}
+_____________________________________________________________________
+Emne: {TOPIC_TITLE}
+Forfatter: {AUTHOR_NAME}
+Besked:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Der vil ikke blive sendt flere adviseringer indtil du besøger forummet. <!-- ENDIF-->Hvis du ikke længere ønsker at overvåge dette forum kan du enten klikke på "Stop overvågning af forum" linket, som er øverst i forummet, eller klikke på følgende link:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

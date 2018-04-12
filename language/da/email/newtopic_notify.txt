@@ -1,0 +1,13 @@
+Subject: Advisering om nyt emne - {FORUM_NAME}
+
+Hej {USERNAME}, forummet "{FORUM_NAME}" på "{SITENAME}" har modtaget et nyt emne siden dit sidste besøg. Du kan bruge følgende link for at se forummet: {U_FORUM}
+_____________________________________________________________________
+Emne: {TOPIC_TITLE}
+Forfatter: {AUTHOR_NAME}
+Besked:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Der vil ikke blive sendt flere adviseringer indtil du besøger forummet. <!-- ENDIF-->Hvis du ikke længere ønsker at overvåge dette forum, kan du enten klikke på "Stop overvågning af forum" linket, der findes øverst i forummet, eller ved at klikke på det følgende link:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

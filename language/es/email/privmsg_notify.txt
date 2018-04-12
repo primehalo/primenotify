@@ -1,0 +1,13 @@
+Subject: Nuevo mensaje privado: {SUBJECT}
+
+Buenos días {USERNAME}: Ha recibido un nuevo mensaje privado en su cuenta en "{SITENAME}". Puede leer este mensaje haciendo clic en: {U_VIEW_MESSAGE}
+_____________________________________________________________________
+
+De: {AUTHOR_NAME}
+Asunto: {SUBJECT}
+Mensaje:
+{MESSAGE}
+_____________________________________________________________________
+
+Usted ha solicitado que se le notifique la recepción de nuevos mensajes. Recuerde que siempre puede desactivar estas notificaciones cambiando el ajuste pertinente en la configuración de su perfil.
+{EMAIL_SIG}

@@ -1,0 +1,16 @@
+Subject: Thema Antwort Benachrichtigung - "{TOPIC_TITLE}"
+
+Hallo {USERNAME}, zum Thema "{TOPIC_TITLE}" auf "{SITENAME}" wurde eine neue Antwort seit deinem letzten Besuch erstellt. Du kannst den Beitrag durch einen Klick auf den folgenden Link besuchen und eine Antwort schreiben: {U_NEWEST_POST}
+_____________________________________________________________________
+Thema: {TOPIC_TITLE}
+Autor: {AUTHOR_NAME}
+Nachricht:
+{MESSAGE}
+_____________________________________________________________________
+
+Wenn du das ganze Thema ansehen willst, dann klicke auf folgenden Link:
+{U_TOPIC}
+
+<!-- IF S_VISIT_MSG -->Bis zum erneuten Besuch des Topics werden keine weiteren Benachrichtigungen gesendet. <!-- ENDIF-->Du kannst das Forum durch einen Klick auf den folgenden Link besuchen:
+{U_STOP_WATCHING_TOPIC}
+{EMAIL_SIG}

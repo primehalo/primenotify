@@ -1,0 +1,13 @@
+Subject: Nieuw bericht notificatie - {FORUM_NAME}
+
+Hallo {USERNAME}, op het forum "{FORUM_NAME}" op "{SITENAME}" staat een nieuw bericht sinds je laatste bezoek. Bekijk het forum door op deze link te klikken: {U_FORUM}
+_____________________________________________________________________
+Bericht: {TOPIC_TITLE}
+Auteur: {AUTHOR_NAME}
+Berichttekst:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Er worden geen notificatie meer gestuurd totdat je het forum bezoekt. <!-- ENDIF-->Als je dit forum niet meer wilt volgen, klik dan bovenaan op "Geen abonnement meer op dit forum" in het forum, of klik op deze link:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

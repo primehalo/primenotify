@@ -1,0 +1,13 @@
+Subject: Forum Benachrichtigung - {FORUM_NAME}
+
+Hallo {USERNAME}, im Forum "{FORUM_NAME}" auf "{SITENAME}" wurde eine neue Antwort seit deinem letzten Besuch erstellt. Du kannst das ganze Forum durch einen Klick auf den folgenden Link besuchen: {U_FORUM}
+_____________________________________________________________________
+Thema: {TOPIC_TITLE}
+Autor: {AUTHOR_NAME}
+Nachricht:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Bis zum erneuten Besuch des Forum werden keine weiteren Benachrichtigungen gesendet. <!-- ENDIF-->Wenn du das Forum nicht mehr beobachten willst, dann klicke den "nicht mehr beobachten" Link im obigen Forum, oder klicke folgenden Link:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

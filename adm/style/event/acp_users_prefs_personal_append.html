@@ -1,0 +1,43 @@
+{% if S_SHOW_OPTIONS %}
+</fieldset>
+
+<fieldset>
+	<legend>{{ lang('UCP_PRIMENOTIFY_TITLE') }}</legend>
+{% if S_SHOW_PRIMENOTIFY_ENABLE_POST %}
+	<dl>
+		<dt><label for="user_primenotify_enable_post0">{{ lang('UCP_PRIMENOTIFY_ENABLE_POST') }}{{ lang('COLON') }}</label><br /><span>{{ lang('UCP_PRIMENOTIFY_ENABLE_POST_EXPLAIN') }}</span></dt>
+		<dd>
+			<label for="user_primenotify_enable_post1"><input type="radio" name="user_primenotify_enable_post" id="user_primenotify_enable_post1" value="1"{% if S_USER_PRIMENOTIFY_ENABLE_POST %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+			<label for="user_primenotify_enable_post0"><input type="radio" name="user_primenotify_enable_post" id="user_primenotify_enable_post0" value="0"{% if not S_USER_PRIMENOTIFY_ENABLE_POST %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+		</dd>
+	</dl>
+{% endif %}
+{% if S_SHOW_PRIMENOTIFY_ENABLE_PM %}
+	<dl>
+		<dt><label for="user_primenotify_enable_pm0">{{ lang('UCP_PRIMENOTIFY_ENABLE_PM') }}{{ lang('COLON') }}</label><br /><span>{{ lang('UCP_PRIMENOTIFY_ENABLE_PM_EXPLAIN') }}</span></dt>
+		<dd>
+			<label for="user_primenotify_enable_pm1"><input type="radio" name="user_primenotify_enable_pm" id="user_primenotify_enable_pm1" value="1"{% if S_USER_PRIMENOTIFY_ENABLE_PM %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+			<label for="user_primenotify_enable_pm0"><input type="radio" name="user_primenotify_enable_pm" id="user_primenotify_enable_pm0" value="0"{% if not S_USER_PRIMENOTIFY_ENABLE_PM %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+		</dd>
+	</dl>
+{% endif %}
+{% if S_SHOW_PRIMENOTIFY_KEEP_BBCODES %}
+	<dl>
+		<dt><label for="user_primenotify_keep_bbcodes0">{{ lang('UCP_PRIMENOTIFY_KEEP_BBCODES') }}{{ lang('COLON') }}</label><br /><span>{{ lang('UCP_PRIMENOTIFY_KEEP_BBCODES_EXPLAIN') }}</span></dt>
+		<dd>
+			<label for="user_primenotify_keep_bbcodes1"><input type="radio" name="user_primenotify_keep_bbcodes" id="user_primenotify_keep_bbcodes1" value="1"{% if S_USER_PRIMENOTIFY_KEEP_BBCODES %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+			<label for="user_primenotify_keep_bbcodes0"><input type="radio" name="user_primenotify_keep_bbcodes" id="user_primenotify_keep_bbcodes0" value="0"{% if not S_USER_PRIMENOTIFY_KEEP_BBCODES %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+		</dd>
+	</dl>
+{% endif %}
+{% if S_SHOW_PRIMENOTIFY_ALWAYS_SEND %}
+	<dl>
+		<dt><label for="user_primenotify_always_send0">{{ lang('UCP_PRIMENOTIFY_ALWAYS_SEND') }}{{ lang('COLON') }}</label><br /><span>{{ lang('UCP_PRIMENOTIFY_ALWAYS_SEND_EXPLAIN') }}</span></dt>
+		<dd>
+			<label for="user_primenotify_always_send1"><input type="radio" name="user_primenotify_always_send" id="user_primenotify_always_send1" value="1"{% if S_USER_PRIMENOTIFY_ALWAYS_SEND %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+			<label for="user_primenotify_always_send0"><input type="radio" name="user_primenotify_always_send" id="user_primenotify_always_send0" value="0"{% if not S_USER_PRIMENOTIFY_ALWAYS_SEND %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+		</dd>
+	</dl>
+{% endif %}
+</fieldset>
+{% endif %}

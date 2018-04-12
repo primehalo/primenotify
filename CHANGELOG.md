@@ -1,0 +1,21 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [1.0.0 BETA 3] - 2018-04-11
+### Fixed
+- The notification would not be marked as read when visiting the topic
+
+## [1.0.0 BETA 2] - 2018-02-28
+### Changed
+- Lowered the phpBB version requirement from 3.2.2 to 3.2.1
+- Improved caching of email template language files and paths
+- Simplified the code that runs when enabling and disabling the extension
+
+### Removed
+- Old code that was not being used.
+
+## [1.0.0 BETA] - 2018-02-19
+- Initial test release for phpBB 3.2, ported from the Prime Notify MOD for phpBB 3.0.

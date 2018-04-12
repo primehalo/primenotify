@@ -1,0 +1,383 @@
+<?php
+/**
+*
+* Prime Notify extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2018 Ken F. Innes IV <https://www.absoluteanime.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+*/
+
+namespace primehalo\primenotify\core;
+
+/*
+* Include only once.
+*/
+if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
+{
+	/**
+	* Class declaration
+	*/
+	class prime_notify
+	{
+		/**
+		* Constants
+		*/
+		const DISABLED		= 0;
+		const ENABLED		= 1;
+		const USER_CHOICE	= 2;
+
+		/**
+		* Service Containers
+		*/
+		private $config;
+		private $db;
+		private $user;
+		private $language;
+		private $bbcode_utils;
+		private $user_loader;
+
+		/**
+		* Variables
+		*/
+		private $myconfig	= array();	// Our config settings
+		private $raw_msg	= '';		// Message content as it is in the database
+		private $orig_msg	= '';		// Message content as the user submitted it
+		private $clean_msg	= '';		// Message content removed of all BBCodes
+		private $keep_users	= array();	// List of user IDs that have the always_send option enabled
+		private $paths		= array();	// List of template directories that have been checked
+		private $files		= array();	// List of template files that have been checked
+
+		/**
+		* Singleton
+		*/
+		public static function Instance()
+		{
+			static $inst = null;
+			if ($inst === null)
+			{
+				$inst = new self();
+			}
+			return $inst;
+		}
+
+		/**
+		* Constructor
+		*/
+		protected function __construct()
+		{
+			global $phpbb_container;
+
+			$this->config		= $phpbb_container->get('config');		// @var \phpbb\config\config
+			$this->db			= $phpbb_container->get('dbal.conn');	// @var \phpbb\db\driver\driver_interface
+			$this->user			= $phpbb_container->get('user');
+			$this->language		= $phpbb_container->get('language');
+			$this->bbcode_utils	= $phpbb_container->get('text_formatter.utils');
+			$this->user_loader	= $phpbb_container->get('user_loader');
+
+			$this->myconfig = array(
+				'enable_post'	=> $this->config['primenotify_enable_post'],
+				'enable_pm'		=> $this->config['primenotify_enable_pm'],
+				'keep_bbcodes'	=> $this->config['primenotify_keep_bbcodes'],
+				'always_send'	=> $this->config['primenotify_always_send'],
+			);
+		}
+
+		/**
+		* Clone
+		*/
+		protected function __clone()
+		{
+		}
+
+		/**
+		* Format the message for display in a plain-text e-mail
+		*
+		* @param object $text Text from a post or private message that needs to be formatted for inserting into a plain-text email
+		* @param boolean $keep_bbcodes
+		* @return string The text formatted for insertion into a plain-text email
+		* @access private
+		*/
+		private function format_for_email($text, $keep_bbcodes = true)
+		{
+			$this->language->add_lang('common', 'primehalo/primenotify');
+
+			if (!$keep_bbcodes)
+			{
+				// Remove nested blocks which could make the message look very messy
+				$text = $this->bbcode_utils->remove_bbcode($text, 'spoiler', 2);
+				$text = $this->bbcode_utils->remove_bbcode($text, 'quote', 2);
+				$text = $this->bbcode_utils->remove_bbcode($text, 'code', 2);
+			}
+
+			// Return the text from its XML form to its original plain text form
+			$text = $this->bbcode_utils->unparse($text);
+
+			// If there is a spoiler, remove the spoiler content.
+			$re = '@\[spoiler(?:=[^]]*)?\]((?!.*\[spoiler\]).*?)\[/spoiler]@s';
+			$spoiler_replacement = $this->language->lang('PRIMENOTIFY_SPOILER_REMOVED');
+			if (stripos($spoiler_replacement, '[spoiler') === false)	// Ensure replacement text doesn't have a [spoiler] tag or we could get an infinite loop
+			{
+				while (preg_match($re, $text))
+				{
+					$text = preg_replace('@\[spoiler(?:=[^]]*)?\]((?!.*\[spoiler\]).*?)\[/spoiler]@s', $this->language->lang('PRIMENOTIFY_SPOILER_REMOVED'), $text);
+				}
+			}
+
+			if ($keep_bbcodes)
+			{
+				// Add spaces in BBCode URL tags so email programs won't think they're part of the URL.
+				$text = preg_replace('@](http(?::|&#58;)//.*?)\[@', '] $1 [', $text);
+			}
+			else
+			{
+				// Change list items bullets (quick & dirty, no checking if we're actually in a list, much less if it's ordered or unordered)
+				$text = str_replace('[*]',  $this->language->lang('PRIMENOTIFY_LIST_ITEM'), $text);
+
+				// Change [url=http://www.example.com]Example[/url] to Example (http://www.example.com)
+				$text = preg_replace('@\[url=([^]]*)\]([^[]*)\[/url\]@', '$2 ($1)', $text);
+
+				// Change [quote=username ...][/quote] to "Quote from username: "
+				$text = preg_replace('@\[quote=([a-zA-Z0-9._-]+)\s*[^]]*\]\s*((?!.*\[quote\]).*?)\[/quote\]@', $this->language->lang('PRIMENOTIFY_QUOTE_FROM'), $text);
+
+				// Change [quote][/quote] to "Quote: "
+				$text = preg_replace('@\[quote\]\s*((?!.*\[quote\]).*?)\[/quote\]@', $this->language->lang('PRIMENOTIFY_QUOTE'), $text);
+
+				// Change [code][/code] to "Code: "
+				$text = preg_replace('@\[code\]\s*((?!.*\[code\]).*?)\[/code\]@', $this->language->lang('PRIMENOTIFY_CODE'), $text);
+
+				// Change [img][/img] to "Image: "
+				$text = preg_replace('@\[img\]\s*(.*[^*]+)\[/img\]@', $this->language->lang('PRIMENOTIFY_IMAGE'), $text);
+
+				// Change [b]text[/b] to *text*
+				$text = preg_replace('@\[b\]((?!.*\[b\]).*?)\[/b\]@', '*$1*', $text);
+
+				// Change [i]text[/i] to /text/
+				$text = preg_replace('@\[i\]((?!.*\[i\]).*?)\[/i\]@', '/$1/', $text);
+
+				// Change [u]text[/u] to _text_
+				$text = preg_replace('@\[u\]((?!.*\[u\]).*?)\[/u\]@', '_$1_', $text);
+
+				// Remove all remaining BBCodes
+				//strip_bbcode($text, $uid_param); // This function replaces BBCodes with spaces, which we don't want
+				$text = preg_replace("#\[\/?[a-z0-9\*\+\-]+(?:=(?:&quot;.*&quot;|[^\]]*))?(?::[a-z])?\]#", '', $text);
+				// In the future we should loop through existing BBCodes to remove them instead of using a blanket RegEx which removes everything that looks like a BBCode
+			}
+			return $text;
+		}
+
+		/**
+		* Determine if the user should be notified even if they've already
+		* received a previous notification and have not yet visited the topic.
+		*
+		* @param $user_id Optional user ID
+		* @return boolean
+		* @access public
+		*/
+		public function should_always_send($user_id = 0)
+		{
+			$user = $this->user_loader->get_user($user_id);	// Users must be loaded already for this to work, otherwise it just returns the anonymous user
+			return $this->is_enabled('always_send', $user);
+		}
+
+		/**
+		* Obtain the text from a post or private message and format it for display inside an email.
+		*
+		* @param object $data The post or private message data that holds the content
+		* @param object $user Recipient user data
+		* @return string The message formatted to work inside a plain text email
+		* @access public
+		*/
+		public function get_processed_text($data, $user = array())
+		{
+			$raw_msg = '';
+			if (isset($data['post_text']))				// For posts
+			{
+				$raw_msg = $data['post_text'];
+			}
+			else if (isset($data['message']))			// For private messages
+			{
+				$raw_msg = $data['message'];
+			}
+			if ($raw_msg !== $this->raw_msg)
+			{
+				$this->raw_msg = $raw_msg;
+				if (!empty($this->raw_msg))
+				{
+					// If this post doesn't have BBCodes enabled then we keep them because they do not represent formatting
+					$bbcodes_disabled	= isset($data['enable_bbcode']) && empty($data['enable_bbcode']);
+					$this->orig_msg		= $this->format_for_email($this->raw_msg, true);
+					$this->clean_msg	= $bbcodes_disabled ? $this->orig_msg : $this->format_for_email($this->raw_msg, false);
+				}
+			}
+			return $this->is_enabled('keep_bbcodes', $user) ? $this->orig_msg : $this->clean_msg;
+		}
+
+		/**
+		* Determine if one of our options is enabled.
+		*
+		* @param string $option
+		* @param object $user
+		* @return boolean
+		* @access public
+		*/
+		public function is_enabled($option, $user = array())
+		{
+			switch ($option)
+			{
+				case 'enable_post':
+					return $this->myconfig['enable_post'] == self::ENABLED
+							|| ($this->myconfig['enable_post'] == self::USER_CHOICE && !empty($user['user_primenotify_enable_post']));
+
+				case 'enable_pm':
+					return $this->myconfig['enable_pm'] == self::ENABLED
+							|| ($this->myconfig['enable_pm'] == self::USER_CHOICE && !empty($user['user_primenotify_enable_pm']));
+
+				case 'keep_bbcodes':
+					return $this->myconfig['keep_bbcodes'] == self::ENABLED
+							|| ($this->myconfig['keep_bbcodes'] == self::USER_CHOICE && !empty($user['user_primenotify_keep_bbcodes']));
+
+				case 'always_send':
+					return $this->myconfig['always_send'] == self::ENABLED
+							|| ($this->myconfig['always_send'] == self::USER_CHOICE && !empty($user['user_primenotify_always_send']));
+
+			}
+			return false;
+		}
+
+		/**
+		* Set our template file as the one to use.
+		*
+		* @param object $messenger
+		* @param object $notification
+		* @param object $user
+		* @param string $template_dir_prefix
+		* @return none
+		* @access public
+		*/
+		public function template($messenger, $notification, $user, $template_dir_prefix = '')
+		{
+			$enabled	= false;
+			$template	= $notification->get_email_template();
+			if (!empty($this->orig_msg) && empty($template_dir_prefix))
+			{
+				switch ($template)
+				{
+					case 'forum_notify': // Note: forum_notify.txt isn't used in phpBB 3.2 but the file still exists
+					case 'newtopic_notify':
+					case 'topic_notify':
+						$enabled = $this->is_enabled('enable_post', $user);
+						break;
+					case 'privmsg_notify':
+						$enabled = $this->is_enabled('enable_pm', $user);
+						break;
+				}
+			}
+			$lang_path = $enabled ? $this->build_lang_path($user['user_lang']) : false;
+			$file_path = $lang_path ? $lang_path . $template . '.txt' : '';
+
+			// Use the default template
+			if (!$enabled || !$lang_path || !$this->template_exists($file_path))
+			{
+				$messenger->template($template_dir_prefix . $template, $user['user_lang']);
+				return;
+			}
+
+			// Setup our the template
+			$messenger->template($template_dir_prefix . $template, $user['user_lang'], $lang_path);
+
+			// Assign extra template variables
+			if (!$this->is_enabled('always_send', $user))
+			{
+				$messenger->assign_vars(array(
+					'S_VISIT_MSG'	=> true,
+				));
+			}
+		}
+
+		/**
+		* Determine if the requested template file exists
+		*
+		* @param string full path to the template file
+		* @return boolean
+		* @access private
+		*/
+		private function template_exists($template_path)
+		{
+			if ($template_path)
+			{
+				if (!isset($this->files[$template_path]))
+				{
+					$this->files[$template_path] = file_exists($template_path);
+				}
+				return $this->files[$template_path];
+			}
+			return false;
+		}
+
+		/**
+		* Obtain the path for our template files
+		*
+		* @param string $user_lang	user's language
+		* @return string of the path found, boolean false otherwise
+		* @access private
+		*/
+		private function build_lang_path($user_lang)
+		{
+			global $phpbb_container;
+
+			$phpbb_root_path	= $phpbb_container->getParameter('core.root_path');
+			$lang_folders		= array_unique(array($user_lang, $this->config['default_lang'], 'en'));
+			foreach ($lang_folders as $lang_folder)
+			{
+				if (!isset($this->paths[$lang_folder]))
+				{
+					$path = "{$phpbb_root_path}ext/primehalo/primenotify/language/{$lang_folder}/email/";
+					$this->paths[$lang_folder] = is_dir($path) ? $path : false;
+				}
+				if ($this->paths[$lang_folder])
+				{
+					return $this->paths[$lang_folder];
+				}
+			}
+			return false;
+		}
+
+		/**
+		* Alter the SQL statement to fit our needs
+		*
+		* @param string $sql	SQL SELECT string
+		* @param object $post	post data
+		* @return null
+		* @access public
+		*/
+		public function alter_post_sql(&$sql, $post = array())
+		{
+			if ($this->myconfig['always_send'] == self::USER_CHOICE)
+			{
+				if (strpos($sql, 'FROM ' . FORUMS_WATCH_TABLE))
+				{
+					$sql = 'SELECT w.user_id as user_id
+						FROM ' . FORUMS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
+						WHERE w.forum_id = ' . (int) $post['forum_id'] . '
+							AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
+							AND w.user_id <> ' . (int) $post['poster_id'];
+				}
+				else
+				{
+					$sql = 'SELECT w.user_id as user_id
+						FROM ' . TOPICS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
+						WHERE w.topic_id = ' . (int) $post['topic_id'] . '
+							AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
+							AND w.user_id <> ' . (int) $post['poster_id'];
+				}
+			}
+			else if ($this->should_always_send())
+			{
+				// Always notify, so don't check if a notification was already sent
+				$sql = str_replace('AND notify_status = ' . NOTIFY_YES, '', $sql);
+			}
+		}
+	}
+	// End class
+}

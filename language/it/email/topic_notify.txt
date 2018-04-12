@@ -1,0 +1,17 @@
+ubject: Notifica risposta argomento - "{TOPIC_TITLE}"
+
+Ciao {USERNAME}.
+Nell'argomento "{TOPIC_TITLE}" su "{SITENAME}" è stata inserita una nuova risposta dopo la tua ultima visita. Puoi vedere i nuovi messaggi cliccando sul seguente link: {U_NEWEST_POST}
+_____________________________________________________________________
+Argomento: {TOPIC_TITLE}
+Autore: {AUTHOR_NAME}
+Messaggio:
+{MESSAGE}
+_____________________________________________________________________
+
+Se vuoi vedere l'argomento, clicca sul seguente link:
+{U_TOPIC}
+
+<!-- IF S_VISIT_MSG -->Nessuna notifica verrà inviata fintanto che non visiterai l’argomento. <!-- ENDIF-->Se non desideri più seguire la discussione, clicca sul link "Annulla sottoscrizione forum" seguendo il link che trovi sopra, oppure clicca sul seguente link:
+{U_STOP_WATCHING_TOPIC}
+{EMAIL_SIG}
