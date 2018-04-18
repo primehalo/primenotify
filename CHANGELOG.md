@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0 BETA 4] - 2018-04-18
+### Fixed
+- The PM notification would not be marked as read when visiting the private message
+
+### Changed
+- All files that used the Windows line ending format (CR/LF) were changed to use the UNIX (LF) line ending format.
+
 ## [1.0.0 BETA 3] - 2018-04-11
 ### Fixed
 - The notification would not be marked as read when visiting the topic

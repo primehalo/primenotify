@@ -74,6 +74,7 @@ class main_listener implements EventSubscriberInterface
 			'core.ucp_prefs_personal_update_data'			=> 'user_prefs_sql',	//3.1.0-a1
 			'core.notification_manager_add_notifications'	=> 'load_users',		//3.1.3-RC1
 			'core.markread_before'							=> 'markread',			//3.1.4-RC1
+			'core.ucp_pm_view_message'						=> 'markread_pm',		//3.2.2-RC1
 			#'core.modify_notification_message'				=> 'modify_notification_message',
 		);
 	}
@@ -198,7 +199,7 @@ class main_listener implements EventSubscriberInterface
 	}
 
 	/**
-	* Mark our notifications as read
+	* Mark our notifications as read so they will be cleared.
 	*
 	* @param array $event The event object:
 	* 	@var	string	mode				Variable containing marking mode value
@@ -276,8 +277,7 @@ class main_listener implements EventSubscriberInterface
 			}
 
 			/* @var $phpbb_notifications \phpbb\notification\manager */
-			#$phpbb_notifications = $phpbb_container->get('notification_manager');
-			$phpbb_notifications = $this->notification_manager;
+			$phpbb_notifications = $this->notification_manager;	# $phpbb_container->get('notification_manager');
 
 			// Mark post notifications read for this user in this topic
 			$phpbb_notifications->mark_notifications(array(
@@ -292,6 +292,34 @@ class main_listener implements EventSubscriberInterface
 				#'notification.type.approve_post',
 			), $topic_id, $user->data['user_id'], $post_time);
 		}
+	}
+
+	/**
+	* Mark our PM notification as read so it will be cleared.
+	*
+	* @param array $event The event object:
+	* 	@var	mixed	id			Active module category (can be int or string)
+	* 	@var	string	mode		Active module
+	* 	@var	int		folder_id	ID of the folder the message is in
+	* 	@var	int		msg_id		ID of the private message
+	* 	@var	array	folder		Array with data of user's message folders
+	* 	@var	array	message_row	Array with message data
+	* 	@var	array	cp_row		Array with senders custom profile field data
+	* 	@var	array	msg_data	Template array with message data
+	* 	@var	array	user_info	User data of the sender
+	* @return none
+	*/
+	function markread_pm($event)
+	{
+		$msg_id		= $event['msg_id'];
+		$user_id	= $this->user->data['user_id']; // The $event variables don't seem to have the recipient's user ID so use $user
+
+		// The below code to mark the PM notification as read was taken from
+		// functions_privmsgs.php's update_unread_status() function.
+
+		/* @var $phpbb_notifications \phpbb\notification\manager */
+		$phpbb_notifications = $this->notification_manager;	#$phpbb_container->get('notification_manager');
+		$phpbb_notifications->mark_notifications('primehalo.primenotify.notification.type.pm', $msg_id, $user_id);
 	}
 
 	/**
