@@ -1,0 +1,14 @@
+Subject: נושא חדש בפורום {FORUM_NAME}
+
+שלום {USERNAME}, בפורום "{FORUM_NAME}" שבאתר "{SITENAME}" פורסם נושא חדש, זהו התקציר שלו:
+
+נושא: {TOPIC_TITLE}
+כותב: {AUTHOR_NAME}
+תוכן: {MESSAGE}
+
+לצפייה בהודעה המלאה ולתגובה, הכנס לפורום על-ידי הקישור הבא: {U_FORUM}.
+_______
+
+<!-- IF S_VISIT_MSG -->No more notifications will be sent until you visit the forum. <!-- ENDIF-->If you no longer wish to watch this forum, either click the "Unsubscribe forum" link found in the forum above, or click the following link:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

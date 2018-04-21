@@ -1,0 +1,16 @@
+Subject: הודעה חדשה בנושא שבפורום {FORUM_NAME}
+
+שלום {USERNAME}, הנושא "{TOPIC_TITLE}" באתר "{SITENAME}" עודכן עם תגובה חדשה, זהו התקציר:
+
+נושא: {TOPIC_TITLE}
+כותב: {AUTHOR_NAME}
+תוכן: {MESSAGE}
+
+אתה יכול לקרוא את ההודעה המלאה ולהגיב באמצעות לחיצה על הקישור: {U_NEWEST_POST}
+אם אתה רוצה לצפות בנושא, לחץ על הקישור: {U_TOPIC}
+
+_______
+
+<!-- IF S_VISIT_MSG -->No more notifications will be sent until you visit the topic. <!-- ENDIF-->If you no longer wish to watch this topic, either click the "Unsubscribe topic" link found in the forum above, or click the following link:
+{U_STOP_WATCHING_TOPIC}
+{EMAIL_SIG}
