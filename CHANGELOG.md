@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0 BETA 5] - 2018-04-20
+### Added
+- An admin setting to allow truncating messages that go over a specified character count
+- Version checking
+
 ## [1.0.0 BETA 4] - 2018-04-18
 ### Fixed
 - The PM notification would not be marked as read when visiting the private message

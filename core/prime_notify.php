@@ -80,6 +80,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 				'enable_pm'		=> $this->config['primenotify_enable_pm'],
 				'keep_bbcodes'	=> $this->config['primenotify_keep_bbcodes'],
 				'always_send'	=> $this->config['primenotify_always_send'],
+				'truncate'		=> $this->config['primenotify_truncate'],
 			);
 		}
 
@@ -208,8 +209,15 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 					$bbcodes_disabled	= isset($data['enable_bbcode']) && empty($data['enable_bbcode']);
 					$this->orig_msg		= $this->format_for_email($this->raw_msg, true);
 					$this->clean_msg	= $bbcodes_disabled ? $this->orig_msg : $this->format_for_email($this->raw_msg, false);
+
+					if (!empty($this->myconfig['truncate']) && $this->myconfig['truncate'] > 0)
+					{
+						$this->orig_msg		= truncate_string($this->orig_msg, $this->myconfig['truncate'], $this->myconfig['truncate'], false, '...');
+						$this->clean_msg	= truncate_string($this->clean_msg, $this->myconfig['truncate'], $this->myconfig['truncate'], false, '...');
+					}
 				}
 			}
+
 			return $this->is_enabled('keep_bbcodes', $user) ? $this->orig_msg : $this->clean_msg;
 		}
 

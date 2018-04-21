@@ -35,6 +35,10 @@
 				<input type="radio" class="radio" name="primenotify_always_send" value="{{ PRIMENOTIFY_DISABLED }}" {% if PRIMENOTIFY_ALWAYS_SEND == PRIMENOTIFY_DISABLED %}checked="checked" {% endif %}/> {{ lang('NO') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_always_send" value="{{ PRIMENOTIFY_USER_CHOICE }}" {% if PRIMENOTIFY_ALWAYS_SEND == PRIMENOTIFY_USER_CHOICE %}checked="checked" {% endif %}/> {{ lang('ACP_PRIMENOTIFY_USER_CHOICE') }} </dd>
 		</dl>
+		<dl>
+			<dt><label for="primenotify_always_send">{{ lang('ACP_PRIMENOTIFY_TRUNCATE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_PRIMENOTIFY_TRUNCATE_EXPLAIN') }}</span></dt>
+			<dd><input type="number" name="primenotify_truncate" value="{{ PRIMENOTIFY_TRUNCATE }}"/></dd>
+		</dl>
 
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;

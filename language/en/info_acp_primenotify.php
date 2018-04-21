@@ -54,4 +54,6 @@ $lang = array_merge($lang, array(
 	'ACP_PRIMENOTIFY_KEEP_BBCODES_EXPLAIN'	=> 'Emails are sent as plain text so BBCodes don’t get converted to formatting. Keeping them may help to show the intended formatting while removing them may make the message look cleaner.',
 	'ACP_PRIMENOTIFY_ALWAYS_SEND'			=> 'Email on each new post',
 	'ACP_PRIMENOTIFY_ALWAYS_SEND_EXPLAIN'	=> 'Send a notification email for each new post made in the subscribed topic or forum. Normally a notification email is sent only for the first new post since the user’s last visit to the topic.',
+	'ACP_PRIMENOTIFY_TRUNCATE'				=> 'Limit Message Length',
+	'ACP_PRIMENOTIFY_TRUNCATE_EXPLAIN'		=> 'Truncates messages longer than the specified character limit. Set to 0 for no limit.',
 ));

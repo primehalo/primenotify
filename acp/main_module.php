@@ -49,6 +49,7 @@ class main_module
 			$config->set('primenotify_enable_pm', $request->variable('primenotify_enable_pm', prime_notify::ENABLED));
 			$config->set('primenotify_keep_bbcodes', $request->variable('primenotify_keep_bbcodes', prime_notify::ENABLED));
 			$config->set('primenotify_always_send', $request->variable('primenotify_always_send', prime_notify::ENABLED));
+			$config->set('primenotify_truncate', $request->variable('primenotify_truncate', prime_notify::ENABLED));
 
 			$log = $phpbb_container->get('log');
 			$log->add('admin', $user->data['user_id'], $user->ip, 'ACP_PRIMENOTIFY_SETTINGS_LOG');
@@ -64,6 +65,7 @@ class main_module
 			'PRIMENOTIFY_ENABLE_PM'		=> $config['primenotify_enable_pm'],
 			'PRIMENOTIFY_KEEP_BBCODES'	=> $config['primenotify_keep_bbcodes'],
 			'PRIMENOTIFY_ALWAYS_SEND'	=> $config['primenotify_always_send'],
+			'PRIMENOTIFY_TRUNCATE'		=> empty($config['primenotify_truncate']) ? 0 : (int)$config['primenotify_truncate'],
 			'U_ACTION'					=> $this->u_action,
 		));
 	}
