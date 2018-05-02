@@ -41,6 +41,7 @@ class main_listener implements EventSubscriberInterface
 	* @param \phpbb\user						$user		User object
 	* @param \phpbb\user_loader					$user_loader
 	* @param \phpbb\notification_manager		$notification_manager
+	* @access public
 	*/
 	public function __construct(
 		\phpbb\config\config $config,
@@ -63,7 +64,10 @@ class main_listener implements EventSubscriberInterface
 	}
 
 	/**
+	* Assign functions defined in this class to event listeners in the core
 	*
+	* @static
+	* @access public
 	*/
 	static public function getSubscribedEvents()
 	{
