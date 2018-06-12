@@ -93,7 +93,7 @@ class version_100 extends \phpbb\db\migration\migration
 			array('config.add', array('primenotify_enable_pm', prime_notify::ENABLED)),
 			array('config.add', array('primenotify_keep_bbcodes', prime_notify::ENABLED)),
 			array('config.add', array('primenotify_always_send', prime_notify::ENABLED)),
-			array('config.add', array('primenotify_truncate', prime_notify::ENABLED)),
+			array('config.add', array('primenotify_truncate', 0)),
 
 			// Add a parent module (ACP_PRIMENOTIFY_TITLE) to the Extensions tab (ACP_CAT_DOT_MODS)
 			array('module.add', array(
