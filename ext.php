@@ -67,7 +67,6 @@ class ext extends \phpbb\extension\base
 							$sql_ary[] = array('item_type' => $our_type, 'user_id' => $row['user_id'], 'method' => 'notification.method.email', 'notify' => $row['notify']);
 						}
 					}
-					$this->db->sql_freeresult($result);
 					$this->db->sql_multi_insert(USER_NOTIFICATIONS_TABLE, $sql_ary);
 				}
 
@@ -109,7 +108,6 @@ class ext extends \phpbb\extension\base
 			{
 				$notification_type_ids[$row['notification_type_name']] = $row['notification_type_id'];
 			}
-			$this->db->sql_freeresult($result);
 
 			// Part 3/4: Change notification_type_id from our custom one to the equivalent default one
 			foreach (self::$notification_types as $from => $to)
