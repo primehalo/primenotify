@@ -76,9 +76,10 @@ class main_listener implements EventSubscriberInterface
 			'core.acp_users_prefs_modify_sql'				=> 'user_prefs_sql',	//3.1.0-b3
 			'core.ucp_prefs_personal_data'					=> 'user_prefs',		//3.1.0-a1
 			'core.ucp_prefs_personal_update_data'			=> 'user_prefs_sql',	//3.1.0-a1
-			'core.notification_manager_add_notifications'	=> 'load_users',		//3.1.3-RC1
+			'core.notification_manager_add_notifications'	=> 'add_notifications',	//3.1.3-RC1
 			'core.markread_before'							=> 'markread',			//3.1.4-RC1
 			'core.ucp_pm_view_message'						=> 'markread_pm',		//3.2.2-RC1
+			'core.user_add_modify_notifications_data'		=> 'user_add_modify_notifications_data', //3.2.2-RC1
 			#'core.modify_notification_message'				=> 'modify_notification_message',
 		);
 	}
@@ -191,8 +192,22 @@ class main_listener implements EventSubscriberInterface
 	*                                     indexed array of user_notifications_table methods
 	* @return none
 	*/
-	public function load_users($event)
+	public function add_notifications($event)
 	{
+		$notification_type_name = $event['notification_type_name'];
+		switch ($notification_type_name) {
+			case 'notification.type.topic':
+				$event['notification_type_name'] = 'primehalo.primenotify.notification.type.topic';
+			break;
+			case 'notification.type.post':
+				$event['notification_type_name'] = 'primehalo.primenotify.notification.type.post';
+			break;
+			case 'notification.type.pm':
+				$event['notification_type_name'] = 'primehalo.primenotify.notification.type.pm';
+			break;
+		}
+
+		// Load Users
 		$notify_users = $event['notify_users'];
 		unset($notify_users[ANONYMOUS]);
 		$user_ids = array_keys($notify_users);
@@ -200,6 +215,18 @@ class main_listener implements EventSubscriberInterface
 		{
 			$this->user_loader->load_users($user_ids);
 		}
+	}
+
+
+
+	/**
+	*/
+	public function user_add_modify_notifications_data($event)
+	{
+		$notifications_data = $event['notifications_data'];
+		$notifications_data[] = array('item_type'	=> 'primehalo.primenotify.notification.type.post', 'method' => 'notification.method.email');
+		$notifications_data[] = array('item_type'	=> 'primehalo.primenotify.notification.type.topic', 'method' => 'notification.method.email');
+		$event['notifications_data'] = $notifications_data;
 	}
 
 	/**

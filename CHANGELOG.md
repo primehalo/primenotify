@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0 BETA 8] - 2018-08-12
+### Fixed
+- The default notification settings would not be set for newly registered users.
+
+### Changed
+- When enabling the extension, a primenotify copy of existing user notification settings is created rather than converting the user notification setting.
+- When disabling the extension, all existing primenotify notifications are changed into their board default equivalents and then all primenotify notification types are removed from the database rather than trying to directly convert primenotify notification types back into board default types which could cause an SQL error if the board default types already existed for any user.
+
 ## [1.0.0 BETA 7] - 2018-06-12
 ### Changed
 - Validate and correct config form data before storing it
