@@ -31,6 +31,16 @@ class pm extends \phpbb\notification\type\pm
 	}
 
 	/**
+	* Get email template
+	*
+	* @return string|bool
+	*/
+	public function get_email_template()
+	{
+		return '@primehalo_primenotify/privmsg_notify';
+	}
+
+	/**
 	* Get email template variables
 	*
 	* @return array
@@ -42,19 +52,6 @@ class pm extends \phpbb\notification\type\pm
 		$template_vars['MESSAGE'] = htmlspecialchars_decode(censor_text($this->get_data('prime_notify_text')));
 		return $template_vars;
 //-- end: Prime Notify ------------------------------------------------------//
-		/*
-		$user_data = $this->user_loader->get_user($this->get_data('from_user_id'));
-
-		return array(
-			'AUTHOR_NAME'				=> htmlspecialchars_decode($user_data['username']),
-			'SUBJECT'					=> htmlspecialchars_decode(censor_text($this->get_data('message_subject'))),
-//-- mod: Prime Notify ------------------------------------------------------//
-			'MESSAGE'					=> htmlspecialchars_decode(censor_text($this->get_data('prime_notify_text'))),
-//-- end: Prime Notify ------------------------------------------------------//
-
-			'U_VIEW_MESSAGE'			=> generate_board_url() . '/ucp.' . $this->php_ext . "?i=pm&mode=view&p={$this->item_id}",
-		);
-		*/
 	}
 
 	/**
@@ -67,16 +64,6 @@ class pm extends \phpbb\notification\type\pm
 		$user_data = $this->user_loader->get_user($this->user_id);
 		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($pm, $user_data));
 //-- end: Prime Notify ------------------------------------------------------//
-		/*
-		$this->set_data('from_user_id', $pm['from_user_id']);
-
-		$this->set_data('message_subject', $pm['message_subject']);
-
-//-- mod: Prime Notify ------------------------------------------------------//
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
-		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($pm, $this->user_loader->get_user($this->user_id)));
-//-- end: Prime Notify ------------------------------------------------------//
-		*/
 		parent::create_insert_array($pm, $pre_create_data);
 	}
 }

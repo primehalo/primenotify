@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0 BETA 9] - 2018-08-17
+### Changed
+- Replaced my custom email template manager with the built-in one
+
 ## [1.0.0 BETA 8] - 2018-08-12
 ### Fixed
 - The default notification settings would not be set for newly registered users.

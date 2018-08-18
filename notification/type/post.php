@@ -120,42 +120,27 @@ class post extends \phpbb\notification\type\post
 	}
 
 	/**
+	* Get email template
+	*
+	* @return string|bool
+	*/
+	public function get_email_template()
+	{
+		return '@primehalo_primenotify/topic_notify';
+	}
+
+	/**
 	* Get email template variables
 	*
 	* @return array
 	*/
 	public function get_email_template_variables()
 	{
+		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$template_vars = parent::get_email_template_variables();
 		$template_vars['MESSAGE'] = htmlspecialchars_decode(censor_text($this->get_data('prime_notify_text')));
+		$template_vars['S_VISIT_MSG'] = !$prime_notify->is_enabled('always_send', $this->user_loader->get_user($this->user_id));
 		return $template_vars;
-
-		/*
-		if ($this->get_data('post_username'))
-		{
-			$username = $this->get_data('post_username');
-		}
-		else
-		{
-			$username = $this->user_loader->get_username($this->get_data('poster_id'), 'username');
-		}
-
-		return array(
-			'AUTHOR_NAME'				=> htmlspecialchars_decode($username),
-			'POST_SUBJECT'				=> htmlspecialchars_decode(censor_text($this->get_data('post_subject'))),
-			'TOPIC_TITLE'				=> htmlspecialchars_decode(censor_text($this->get_data('topic_title'))),
-//-- mod: Prime Notify ------------------------------------------------------//
-			'MESSAGE'					=> htmlspecialchars_decode(censor_text($this->get_data('prime_notify_text'))),
-//-- end: Prime Notify ------------------------------------------------------//
-
-			'U_VIEW_POST'				=> generate_board_url() . "/viewtopic.{$this->php_ext}?p={$this->item_id}#p{$this->item_id}",
-			'U_NEWEST_POST'				=> generate_board_url() . "/viewtopic.{$this->php_ext}?f={$this->get_data('forum_id')}&t={$this->item_parent_id}&e=1&view=unread#unread",
-			'U_TOPIC'					=> generate_board_url() . "/viewtopic.{$this->php_ext}?f={$this->get_data('forum_id')}&t={$this->item_parent_id}",
-			'U_VIEW_TOPIC'				=> generate_board_url() . "/viewtopic.{$this->php_ext}?f={$this->get_data('forum_id')}&t={$this->item_parent_id}",
-			'U_FORUM'					=> generate_board_url() . "/viewforum.{$this->php_ext}?f={$this->get_data('forum_id')}",
-			'U_STOP_WATCHING_TOPIC'		=> generate_board_url() . "/viewtopic.{$this->php_ext}?uid={$this->user_id}&f={$this->get_data('forum_id')}&t={$this->item_parent_id}&unwatch=topic",
-		);
-		*/
 	}
 
 	/**
@@ -167,35 +152,5 @@ class post extends \phpbb\notification\type\post
 		$user_data = $this->user_loader->get_user($this->user_id);	// Could also probably get user_id from $this->__get('user_id')
 		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($post, $user_data)); // So it can be retrieved via get_data() in get_email_template_variables()
 		parent::create_insert_array($post, $pre_create_data);
-
-		/*
-		$this->set_data('poster_id', $post['poster_id']);
-
-		$this->set_data('topic_title', $post['topic_title']);
-
-		$this->set_data('post_subject', $post['post_subject']);
-
-		$this->set_data('post_username', (($post['poster_id'] == ANONYMOUS) ? $post['post_username'] : ''));
-
-		$this->set_data('forum_id', $post['forum_id']);
-
-		$this->set_data('forum_name', $post['forum_name']);
-
-//-- mod: Prime Notify ------------------------------------------------------//
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
-		$user_data = $this->user_loader->get_user($this->user_id);	// Could also probably get user_id from $this->__get('user_id')
-		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($post, $user_data)); // So it can be retrieved via get_data() in get_email_template_variables()
-//-- end: Prime Notify ------------------------------------------------------//
-
-		$this->notification_time = $post['post_time'];
-
-		// Topics can be "read" before they are public (while awaiting approval).
-		// Make sure that if the user has read the topic, it's marked as read in the notification
-		if ($this->inherit_read_status && isset($pre_create_data[$this->user_id]) && $pre_create_data[$this->user_id] >= $this->notification_time)
-		{
-			$this->notification_read = true;
-		}
-		parent::create_insert_array($post, $pre_create_data);
-		*/
 	}
 }

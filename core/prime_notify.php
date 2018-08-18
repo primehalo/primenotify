@@ -168,20 +168,6 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 		}
 
 		/**
-		* Determine if the user should be notified even if they've already
-		* received a previous notification and have not yet visited the topic.
-		*
-		* @param $user_id Optional user ID
-		* @return boolean
-		* @access public
-		*/
-		public function should_always_send($user_id = 0)
-		{
-			$user = $this->user_loader->get_user($user_id);	// Users must be loaded already for this to work, otherwise it just returns the anonymous user
-			return $this->is_enabled('always_send', $user);
-		}
-
-		/**
 		* Obtain the text from a post or private message and format it for display inside an email.
 		*
 		* @param object $data The post or private message data that holds the content
@@ -248,9 +234,58 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 				case 'always_send':
 					return $this->myconfig['always_send'] == self::ENABLED
 							|| ($this->myconfig['always_send'] == self::USER_CHOICE && !empty($user['user_primenotify_always_send']));
-
 			}
 			return false;
+		}
+
+		/**
+		* Determine if the user should be notified even if they've already
+		* received a previous notification and have not yet visited the topic.
+		*
+		* @param $user_id Optional user ID
+		* @return boolean
+		* @access public
+		*/
+		public function should_always_send($user_id = 0)
+		{
+			$user = $this->user_loader->get_user($user_id);	// Users must be loaded already for this to work, otherwise it just returns the anonymous user
+			return $this->is_enabled('always_send', $user);
+		}
+
+		/**
+		* Alter the SQL statement to fit our needs
+		*
+		* @param string $sql	SQL SELECT string
+		* @param object $post	post data
+		* @return null
+		* @access public
+		*/
+		public function alter_post_sql(&$sql, $post = array())
+		{
+			if ($this->myconfig['always_send'] == self::USER_CHOICE)
+			{
+				if (strpos($sql, 'FROM ' . FORUMS_WATCH_TABLE))
+				{
+					$sql = 'SELECT w.user_id as user_id
+						FROM ' . FORUMS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
+						WHERE w.forum_id = ' . (int) $post['forum_id'] . '
+							AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
+							AND w.user_id <> ' . (int) $post['poster_id'];
+				}
+				else
+				{
+					$sql = 'SELECT w.user_id as user_id
+						FROM ' . TOPICS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
+						WHERE w.topic_id = ' . (int) $post['topic_id'] . '
+							AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
+							AND w.user_id <> ' . (int) $post['poster_id'];
+				}
+			}
+			else if ($this->should_always_send())
+			{
+				// Always notify, so don't check if a notification was already sent
+				$sql = str_replace('AND notify_status = ' . NOTIFY_YES, '', $sql);
+			}
 		}
 
 		/**
@@ -263,6 +298,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 		* @return none
 		* @access public
 		*/
+		/*
 		public function template($messenger, $notification, $user, $template_dir_prefix = '')
 		{
 			$enabled	= false;
@@ -302,6 +338,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 				));
 			}
 		}
+		*/
 
 		/**
 		* Determine if the requested template file exists
@@ -310,6 +347,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 		* @return boolean
 		* @access private
 		*/
+		/*
 		private function template_exists($template_path)
 		{
 			if ($template_path)
@@ -322,6 +360,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 			}
 			return false;
 		}
+		*/
 
 		/**
 		* Obtain the path for our template files
@@ -330,6 +369,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 		* @return string of the path found, boolean false otherwise
 		* @access private
 		*/
+		/*
 		private function build_lang_path($user_lang)
 		{
 			global $phpbb_container;
@@ -350,42 +390,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 			}
 			return false;
 		}
-
-		/**
-		* Alter the SQL statement to fit our needs
-		*
-		* @param string $sql	SQL SELECT string
-		* @param object $post	post data
-		* @return null
-		* @access public
 		*/
-		public function alter_post_sql(&$sql, $post = array())
-		{
-			if ($this->myconfig['always_send'] == self::USER_CHOICE)
-			{
-				if (strpos($sql, 'FROM ' . FORUMS_WATCH_TABLE))
-				{
-					$sql = 'SELECT w.user_id as user_id
-						FROM ' . FORUMS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
-						WHERE w.forum_id = ' . (int) $post['forum_id'] . '
-							AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
-							AND w.user_id <> ' . (int) $post['poster_id'];
-				}
-				else
-				{
-					$sql = 'SELECT w.user_id as user_id
-						FROM ' . TOPICS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
-						WHERE w.topic_id = ' . (int) $post['topic_id'] . '
-							AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
-							AND w.user_id <> ' . (int) $post['poster_id'];
-				}
-			}
-			else if ($this->should_always_send())
-			{
-				// Always notify, so don't check if a notification was already sent
-				$sql = str_replace('AND notify_status = ' . NOTIFY_YES, '', $sql);
-			}
-		}
 	}
 	// End class
 }

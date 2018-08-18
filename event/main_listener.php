@@ -194,8 +194,7 @@ class main_listener implements EventSubscriberInterface
 	*/
 	public function add_notifications($event)
 	{
-		$notification_type_name = $event['notification_type_name'];
-		switch ($notification_type_name) {
+		switch ($event['notification_type_name']) {
 			case 'notification.type.topic':
 				$event['notification_type_name'] = 'primehalo.primenotify.notification.type.topic';
 			break;
@@ -220,6 +219,10 @@ class main_listener implements EventSubscriberInterface
 
 
 	/**
+	* Include our notifications as defaults when a new user is added
+	*
+	* @param array $event The event object
+	* @return none
 	*/
 	public function user_add_modify_notifications_data($event)
 	{
@@ -292,8 +295,7 @@ class main_listener implements EventSubscriberInterface
 			}
 
 			/* @var $phpbb_notifications \phpbb\notification\manager */
-			#$phpbb_notifications = $phpbb_container->get('notification_manager');
-			$phpbb_notifications = $this->notification_manager;
+			$phpbb_notifications = $this->notification_manager;	# $phpbb_container->get('notification_manager');
 
 			$phpbb_notifications->mark_notifications_by_parent(array(
 				'primehalo.primenotify.notification.type.topic',
