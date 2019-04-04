@@ -151,6 +151,7 @@ class post extends \phpbb\notification\type\post
 		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$user_data = $this->user_loader->get_user($this->user_id);	// Could also probably get user_id from $this->__get('user_id')
 		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($post, $user_data)); // So it can be retrieved via get_data() in get_email_template_variables()
+
 		parent::create_insert_array($post, $pre_create_data);
 	}
 }

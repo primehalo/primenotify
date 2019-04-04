@@ -1,0 +1,16 @@
+Subject: Upozornění na odpověď ve fóru - {FORUM_NAME}
+
+Ahoj {USERNAME}. Obdržel jste toto upozornění, protože sledujete fórum "{FORUM_NAME}" na webu "{SITENAME}". Pro zobrazení fóra klikněte na následující odkaz: {U_FORUM}
+_____________________________________________________________________
+Téma: {TOPIC_TITLE}
+Autor: {AUTHOR_NAME}
+Zpráva:
+{MESSAGE}
+_____________________________________________________________________
+
+<!-- IF S_VISIT_MSG -->Dokud fórum nenavštívíte, nebudou vám
+poslány žádné další upozornění. <!-- ENDIF-->Pokud nadále nechcete sledovat toto fórum, můžete buď kliknout na odkaz
+„Ukončit sledování fóra“, který naleznete naspodu tématu nahoře, nebo
+kliknout na následující odkaz:
+{U_STOP_WATCHING_FORUM}
+{EMAIL_SIG}

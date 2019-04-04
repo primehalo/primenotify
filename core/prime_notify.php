@@ -177,7 +177,7 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 		*/
 		public function get_processed_text($data, $user = array())
 		{
-			$raw_msg = '';
+			$raw_msg = '';								// The message as it exists in the database
 			if (isset($data['post_text']))				// For posts
 			{
 				$raw_msg = $data['post_text'];
@@ -203,8 +203,10 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 					}
 				}
 			}
+			$msg = $this->is_enabled('keep_bbcodes', $user) ? $this->orig_msg : $this->clean_msg;
+			$msg = (string)preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xef\xbf\xbd", $msg); // "\xef\xbf\xbd": UTF-8 REPLACEMENT CHARACTER
 
-			return $this->is_enabled('keep_bbcodes', $user) ? $this->orig_msg : $this->clean_msg;
+			return $msg;
 		}
 
 		/**
@@ -288,109 +290,6 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 			}
 		}
 
-		/**
-		* Set our template file as the one to use.
-		*
-		* @param object $messenger
-		* @param object $notification
-		* @param object $user
-		* @param string $template_dir_prefix
-		* @return none
-		* @access public
-		*/
-		/*
-		public function template($messenger, $notification, $user, $template_dir_prefix = '')
-		{
-			$enabled	= false;
-			$template	= $notification->get_email_template();
-			if (!empty($this->orig_msg) && empty($template_dir_prefix))
-			{
-				switch ($template)
-				{
-					case 'forum_notify': // Note: forum_notify.txt isn't used in phpBB 3.2 but the file still exists
-					case 'newtopic_notify':
-					case 'topic_notify':
-						$enabled = $this->is_enabled('enable_post', $user);
-						break;
-					case 'privmsg_notify':
-						$enabled = $this->is_enabled('enable_pm', $user);
-						break;
-				}
-			}
-			$lang_path = $enabled ? $this->build_lang_path($user['user_lang']) : false;
-			$file_path = $lang_path ? $lang_path . $template . '.txt' : '';
-
-			// Use the default template
-			if (!$enabled || !$lang_path || !$this->template_exists($file_path))
-			{
-				$messenger->template($template_dir_prefix . $template, $user['user_lang']);
-				return;
-			}
-
-			// Setup our the template
-			$messenger->template($template_dir_prefix . $template, $user['user_lang'], $lang_path);
-
-			// Assign extra template variables
-			if (!$this->is_enabled('always_send', $user))
-			{
-				$messenger->assign_vars(array(
-					'S_VISIT_MSG'	=> true,
-				));
-			}
-		}
-		*/
-
-		/**
-		* Determine if the requested template file exists
-		*
-		* @param string full path to the template file
-		* @return boolean
-		* @access private
-		*/
-		/*
-		private function template_exists($template_path)
-		{
-			if ($template_path)
-			{
-				if (!isset($this->files[$template_path]))
-				{
-					$this->files[$template_path] = file_exists($template_path);
-				}
-				return $this->files[$template_path];
-			}
-			return false;
-		}
-		*/
-
-		/**
-		* Obtain the path for our template files
-		*
-		* @param string $user_lang	user's language
-		* @return string of the path found, boolean false otherwise
-		* @access private
-		*/
-		/*
-		private function build_lang_path($user_lang)
-		{
-			global $phpbb_container;
-
-			$phpbb_root_path	= $phpbb_container->getParameter('core.root_path');
-			$lang_folders		= array_unique(array($user_lang, $this->config['default_lang'], 'en'));
-			foreach ($lang_folders as $lang_folder)
-			{
-				if (!isset($this->paths[$lang_folder]))
-				{
-					$path = "{$phpbb_root_path}ext/primehalo/primenotify/language/{$lang_folder}/email/";
-					$this->paths[$lang_folder] = is_dir($path) ? $path : false;
-				}
-				if ($this->paths[$lang_folder])
-				{
-					return $this->paths[$lang_folder];
-				}
-			}
-			return false;
-		}
-		*/
 	}
 	// End class
 }
