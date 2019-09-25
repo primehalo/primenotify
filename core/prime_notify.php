@@ -10,6 +10,14 @@
 
 namespace primehalo\primenotify\core;
 
+/**
+* @ignore
+*/
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
 /*
 * Include only once.
 */
