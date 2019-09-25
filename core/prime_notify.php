@@ -204,6 +204,17 @@ if (!class_exists('primehalo\\primenotify\\core\\prime_notify'))
 				}
 			}
 			$msg = $this->is_enabled('keep_bbcodes', $user) ? $this->orig_msg : $this->clean_msg;
+
+			// Replace Emojis and other 4bit UTF-8 chars not allowed by utf8_bin in MySql to NCR. (code snippet taken from includes/functions_display.php)
+			if (preg_match_all('/[\x{10000}-\x{10FFFF}]/u', $msg, $matches))
+			{
+				foreach ($matches as $key => $emoji)
+				{
+					$msg = str_replace($emoji, utf8_encode_ncr($emoji), $msg);
+				}
+			}
+
+			// Fallback: convert all out-of-bounds characters that are currently not supported by utf8_bin in MySQL
 			$msg = (string)preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xef\xbf\xbd", $msg); // "\xef\xbf\xbd": UTF-8 REPLACEMENT CHARACTER
 
 			return $msg;

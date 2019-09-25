@@ -84,7 +84,8 @@ class topic extends \phpbb\notification\type\topic
 	{
 		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$template_vars = parent::get_email_template_variables();
-		$template_vars['MESSAGE'] = htmlspecialchars_decode(censor_text($this->get_data('prime_notify_text')));
+		$msg = utf8_decode_ncr(censor_text($this->get_data('prime_notify_text')));
+		$template_vars['MESSAGE'] = htmlspecialchars_decode($msg);
 		$template_vars['S_VISIT_MSG'] = !$prime_notify->is_enabled('always_send', $this->user_loader->get_user($this->user_id));
 		return $template_vars;
 	}

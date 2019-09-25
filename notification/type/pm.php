@@ -49,7 +49,8 @@ class pm extends \phpbb\notification\type\pm
 	{
 //-- mod: Prime Notify ------------------------------------------------------//
 		$template_vars = parent::get_email_template_variables();
-		$template_vars['MESSAGE'] = htmlspecialchars_decode(censor_text($this->get_data('prime_notify_text')));
+		$msg = utf8_decode_ncr(censor_text($this->get_data('prime_notify_text')));
+		$template_vars['MESSAGE'] = htmlspecialchars_decode($msg);
 		return $template_vars;
 //-- end: Prime Notify ------------------------------------------------------//
 	}
