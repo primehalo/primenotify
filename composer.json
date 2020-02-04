@@ -4,7 +4,7 @@
 	"description": "Inserts the content of a post or private messages into notification e-mails. Options allow long messages to be truncated, BBCodes to be kept or removed, and notification emails to be sent after every new post or just the first new post.",
 	"homepage": "https://github.com/primehalo/primenotify",
 	"version": "1.0.0",
-	"time": "2019-09-25",
+	"time": "2020-01-13",
 	"license": "GPL-2.0-only",
 	"authors": [
 		{
@@ -20,7 +20,7 @@
 	"extra": {
 		"display-name": "Prime Notify",
 		"soft-require": {
-		   "phpbb/phpbb": ">=3.2.1,<3.3.0@dev"
+		   "phpbb/phpbb": ">=3.2.1"
 		},
 		"version-check": {
 		    "host": "www.absoluteanime.com",

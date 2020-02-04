@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2020-01-13
+### Changed
+- Changed the comment \phpbb\notification_manager to \phpbb\notification\manager in event/main_listener.php
+
+### Fixed
+- Fixed illegal characters in the French and Dutch email language files
+
+### Removed
+- Removed unused declared variables from core/prime_notify.php
+- Removed specific comments from notification/type/post.php and nofitication/type/topic.php that marked code which was specific to this extension
+
+## [1.0.0] - 2019-11-02
+### Changed
+- Used a new function introduced in phpBB 3.2.9 for encoding 4-byte characters, but only if the function exists.
+
+## [1.0.0] - 2019-10-28
+### Changed
+- Converted the core prime_notify class into a service
+
 ## [1.0.0] - 2019-09-25
 ### Changed
 - Encode 4-byte characters such as emojis so they can be stored in the database and later retrieved, decoded, and displayed within emails. Previously such characters were just being converted to a single utf8_bin supported character.

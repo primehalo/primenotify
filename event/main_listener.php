@@ -40,7 +40,7 @@ class main_listener implements EventSubscriberInterface
 	* @param \phpbb\template\template 			$template	Template object
 	* @param \phpbb\user						$user		User object
 	* @param \phpbb\user_loader					$user_loader
-	* @param \phpbb\notification_manager		$notification_manager
+	* @param \phpbb\notification\manager		$notification_manager
 	* @access public
 	*/
 	public function __construct(
@@ -80,7 +80,6 @@ class main_listener implements EventSubscriberInterface
 			'core.markread_before'							=> 'markread',			//3.1.4-RC1
 			'core.ucp_pm_view_message'						=> 'markread_pm',		//3.2.2-RC1
 			'core.user_add_modify_notifications_data'		=> 'user_add_modify_notifications_data', //3.2.2-RC1
-			#'core.modify_notification_message'				=> 'modify_notification_message',
 		);
 	}
 

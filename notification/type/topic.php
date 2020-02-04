@@ -17,6 +17,13 @@ namespace primehalo\primenotify\notification\type;
 
 class topic extends \phpbb\notification\type\topic
 {
+	/** @var \primehalo\primenotify\core\prime_notify */
+	protected $prime_notify;
+	public function set_prime_notify(\primehalo\primenotify\core\prime_notify $prime_notify)
+	{
+		$this->prime_notify = $prime_notify;
+	}
+
 	/**
 	* Get notification type name
 	*
@@ -24,10 +31,7 @@ class topic extends \phpbb\notification\type\topic
 	*/
 	public function get_type()
 	{
-//-- mod: Prime Notify ------------------------------------------------------//
 		return 'primehalo.primenotify.notification.type.topic';
-//-- end: Prime Notify ------------------------------------------------------//
-//-- rem:		return 'notification.type.topic';
 	}
 
 	/**
@@ -51,10 +55,9 @@ class topic extends \phpbb\notification\type\topic
 			WHERE forum_id = ' . (int) $topic['forum_id'] . '
 				AND notify_status = ' . NOTIFY_YES . '
 				AND user_id <> ' . (int) $topic['poster_id'];
-//-- mod: Prime Notify ------------------------------------------------------//
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
-		$prime_notify->alter_post_sql($sql, $topic);
-//-- end: Prime Notify ------------------------------------------------------//
+
+		$this->prime_notify->alter_post_sql($sql, $topic);
+
 		$result = $this->db->sql_query($sql);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -82,11 +85,10 @@ class topic extends \phpbb\notification\type\topic
 	*/
 	public function get_email_template_variables()
 	{
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$template_vars = parent::get_email_template_variables();
 		$msg = utf8_decode_ncr(censor_text($this->get_data('prime_notify_text')));
 		$template_vars['MESSAGE'] = htmlspecialchars_decode($msg);
-		$template_vars['S_VISIT_MSG'] = !$prime_notify->is_enabled('always_send', $this->user_loader->get_user($this->user_id));
+		$template_vars['S_VISIT_MSG'] = !$this->prime_notify->is_enabled('always_send', $this->user_loader->get_user($this->user_id));
 		return $template_vars;
 	}
 
@@ -95,10 +97,8 @@ class topic extends \phpbb\notification\type\topic
 	*/
 	public function create_insert_array($post, $pre_create_data = array())
 	{
-
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$user_data = $this->user_loader->get_user($this->user_id);	// Could also probably get user_id from $this->__get('user_id')
-		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($post, $user_data)); // So it can be retrieved via get_data() in get_email_template_variables()
+		$this->set_data('prime_notify_text', $this->prime_notify->get_processed_text($post, $user_data)); // So it can be retrieved via get_data() in get_email_template_variables()
 		parent::create_insert_array($post, $pre_create_data);
 	}
 }

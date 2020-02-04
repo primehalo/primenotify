@@ -13,31 +13,31 @@
 	<fieldset>
 		<dl>
 			<dt><label for="primenotify_enable_post">{{ lang('ACP_PRIMENOTIFY_ENABLE_POST') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_PRIMENOTIFY_ENABLE_POST_EXPLAIN') }}</span></dt>
-			<dd><input type="radio" class="radio" name="primenotify_enable_post" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_ENABLE_POST == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
+			<dd><input type="radio" class="radio" id="primenotify_enable_post" name="primenotify_enable_post" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_ENABLE_POST == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_enable_post" value="{{ PRIMENOTIFY_DISABLED }}" {% if PRIMENOTIFY_ENABLE_POST == PRIMENOTIFY_DISABLED %}checked="checked" {% endif %}/> {{ lang('NO') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_enable_post" value="{{ PRIMENOTIFY_USER_CHOICE }}" {% if PRIMENOTIFY_ENABLE_POST == PRIMENOTIFY_USER_CHOICE %}checked="checked" {% endif %}/> {{ lang('ACP_PRIMENOTIFY_USER_CHOICE') }}</dd>
 		</dl>
 		<dl>
 			<dt><label for="primenotify_enable_pm">{{ lang('ACP_PRIMENOTIFY_ENABLE_PM') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_PRIMENOTIFY_ENABLE_PM_EXPLAIN') }}</span></dt>
-			<dd><input type="radio" class="radio" name="primenotify_enable_pm" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_ENABLE_PM == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
+			<dd><input type="radio" class="radio" id="primenotify_enable_pm" name="primenotify_enable_pm" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_ENABLE_PM == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_enable_pm" value="{{ PRIMENOTIFY_DISABLED }}" {% if PRIMENOTIFY_ENABLE_PM == PRIMENOTIFY_DISABLED %}checked="checked" {% endif %}/> {{ lang('NO') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_enable_pm" value="{{ PRIMENOTIFY_USER_CHOICE }}" {% if PRIMENOTIFY_ENABLE_PM == PRIMENOTIFY_USER_CHOICE %}checked="checked" {% endif %}/> {{ lang('ACP_PRIMENOTIFY_USER_CHOICE') }}</dd>
 		</dl>
 		<dl>
 			<dt><label for="primenotify_keep_bbcodes">{{ lang('ACP_PRIMENOTIFY_KEEP_BBCODES') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_PRIMENOTIFY_KEEP_BBCODES_EXPLAIN') }}</span></dt>
-			<dd><input type="radio" class="radio" name="primenotify_keep_bbcodes" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_KEEP_BBCODES == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
+			<dd><input type="radio" class="radio" id="primenotify_keep_bbcodes" name="primenotify_keep_bbcodes" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_KEEP_BBCODES == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_keep_bbcodes" value="{{ PRIMENOTIFY_DISABLED }}" {% if PRIMENOTIFY_KEEP_BBCODES == PRIMENOTIFY_DISABLED %}checked="checked" {% endif %}/> {{ lang('NO') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_keep_bbcodes" value="{{ PRIMENOTIFY_USER_CHOICE }}" {% if PRIMENOTIFY_KEEP_BBCODES == PRIMENOTIFY_USER_CHOICE %}checked="checked" {% endif %}/> {{ lang('ACP_PRIMENOTIFY_USER_CHOICE') }}</dd>
 		</dl>
 		<dl>
 			<dt><label for="primenotify_always_send">{{ lang('ACP_PRIMENOTIFY_ALWAYS_SEND') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_PRIMENOTIFY_ALWAYS_SEND_EXPLAIN') }}</span></dt>
-			<dd><input type="radio" class="radio" name="primenotify_always_send" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_ALWAYS_SEND == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
+			<dd><input type="radio" class="radio" id="primenotify_always_send" name="primenotify_always_send" value="{{ PRIMENOTIFY_ENABLED }}" {% if PRIMENOTIFY_ALWAYS_SEND == PRIMENOTIFY_ENABLED %}checked="checked" {% endif %}/> {{ lang('YES') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_always_send" value="{{ PRIMENOTIFY_DISABLED }}" {% if PRIMENOTIFY_ALWAYS_SEND == PRIMENOTIFY_DISABLED %}checked="checked" {% endif %}/> {{ lang('NO') }} &nbsp;
 				<input type="radio" class="radio" name="primenotify_always_send" value="{{ PRIMENOTIFY_USER_CHOICE }}" {% if PRIMENOTIFY_ALWAYS_SEND == PRIMENOTIFY_USER_CHOICE %}checked="checked" {% endif %}/> {{ lang('ACP_PRIMENOTIFY_USER_CHOICE') }} </dd>
 		</dl>
 		<dl>
-			<dt><label for="primenotify_always_send">{{ lang('ACP_PRIMENOTIFY_TRUNCATE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_PRIMENOTIFY_TRUNCATE_EXPLAIN') }}</span></dt>
-			<dd><input type="number" min="0" name="primenotify_truncate" value="{{ PRIMENOTIFY_TRUNCATE }}"/></dd>
+			<dt><label for="primenotify_truncate">{{ lang('ACP_PRIMENOTIFY_TRUNCATE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_PRIMENOTIFY_TRUNCATE_EXPLAIN') }}</span></dt>
+			<dd><input type="number" min="0" id="primenotify_truncate" name="primenotify_truncate" value="{{ PRIMENOTIFY_TRUNCATE }}"/></dd>
 		</dl>
 
 		<p class="submit-buttons">

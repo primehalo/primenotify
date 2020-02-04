@@ -17,6 +17,13 @@ namespace primehalo\primenotify\notification\type;
 
 class post extends \phpbb\notification\type\post
 {
+	/** @var \primehalo\primenotify\core\prime_notify */
+	protected $prime_notify;
+	public function set_prime_notify(\primehalo\primenotify\core\prime_notify $prime_notify)
+	{
+		$this->prime_notify = $prime_notify;
+	}
+
 	/**
 	* Get notification type name
 	*
@@ -24,10 +31,7 @@ class post extends \phpbb\notification\type\post
 	*/
 	public function get_type()
 	{
-//-- mod: Prime Notify ------------------------------------------------------//
 		return 'primehalo.primenotify.notification.type.post';
-//-- mod: Prime Notify ------------------------------------------------------//
-//-- rem:		return 'notification.type.post';
 	}
 
 	/**
@@ -51,10 +55,9 @@ class post extends \phpbb\notification\type\post
 			WHERE topic_id = ' . (int) $post['topic_id'] . '
 				AND notify_status = ' . NOTIFY_YES . '
 				AND user_id <> ' . (int) $post['poster_id'];
-//-- mod: Prime Notify ------------------------------------------------------//
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
-		$prime_notify->alter_post_sql($sql, $post);
-//-- end: Prime Notify ------------------------------------------------------//
+
+		$this->prime_notify->alter_post_sql($sql, $post);
+
 		$result = $this->db->sql_query($sql);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -67,9 +70,9 @@ class post extends \phpbb\notification\type\post
 			WHERE forum_id = ' . (int) $post['forum_id'] . '
 				AND notify_status = ' . NOTIFY_YES . '
 				AND user_id <> ' . (int) $post['poster_id'];
-//-- mod: Prime Notify ------------------------------------------------------//
-		$prime_notify->alter_post_sql($sql, $post);
-//-- end: Prime Notify ------------------------------------------------------//
+
+		$this->prime_notify->alter_post_sql($sql, $post);
+
 		$result = $this->db->sql_query($sql);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -89,20 +92,15 @@ class post extends \phpbb\notification\type\post
 			'item_parent_id'	=> static::get_item_parent_id($post),
 			'read'				=> 0,
 		));
-//-- mod: Prime Notify ------------------------------------------------------//
-//		$prime_notify->keep_users_to_notify($notified_users);
+
 		$this->user_loader->load_users(array_keys($notified_users)); // Load user data so should_always_send() knows their user_primenotify_always_send setting
-//-- end: Prime Notify ------------------------------------------------------//
 
 		foreach ($notified_users as $user => $notification_data)
 		{
-//-- mod: Prime Notify ------------------------------------------------------//
-			if (!$prime_notify->should_always_send($user))	// Note: $user is actually just a user_id... very misleading
+			if (!$this->prime_notify->should_always_send($user))	// Note: $user is actually just a user_id... very misleading
 			{
 				unset($notify_users[$user]);
 			}
-//-- end: Prime Notify ------------------------------------------------------//
-//-- rem:			unset($notify_users[$user]);
 
 			/** @var post $notification */
 			$notification = $this->notification_manager->get_item_type_class($this->get_type(), $notification_data);
@@ -136,11 +134,10 @@ class post extends \phpbb\notification\type\post
 	*/
 	public function get_email_template_variables()
 	{
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$template_vars = parent::get_email_template_variables();
 		$msg = utf8_decode_ncr(censor_text($this->get_data('prime_notify_text')));
 		$template_vars['MESSAGE'] = htmlspecialchars_decode($msg);
-		$template_vars['S_VISIT_MSG'] = !$prime_notify->is_enabled('always_send', $this->user_loader->get_user($this->user_id));
+		$template_vars['S_VISIT_MSG'] = !$this->prime_notify->is_enabled('always_send', $this->user_loader->get_user($this->user_id));
 		return $template_vars;
 	}
 
@@ -149,9 +146,8 @@ class post extends \phpbb\notification\type\post
 	*/
 	public function create_insert_array($post, $pre_create_data = array())
 	{
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$user_data = $this->user_loader->get_user($this->user_id);	// Could also probably get user_id from $this->__get('user_id')
-		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($post, $user_data)); // So it can be retrieved via get_data() in get_email_template_variables()
+		$this->set_data('prime_notify_text', $this->prime_notify->get_processed_text($post, $user_data)); // So it can be retrieved via get_data() in get_email_template_variables()
 
 		parent::create_insert_array($post, $pre_create_data);
 	}

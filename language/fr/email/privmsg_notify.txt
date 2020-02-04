@@ -1,6 +1,6 @@
 Subject: Nouveau message prive : {SUBJECT}
 
-Bonjour {USERNAME}, vous avez recu un nouveau message prive sur votre compte sur le site Å· {SITENAME} Å‚. Vous pouvez acceder au message en cliquant sur le lien suivant : {U_VIEW_MESSAGE}
+Bonjour {USERNAME}, vous avez recu un nouveau message prive sur votre compte sur le site ¬´ {SITENAME} ¬ª. Vous pouvez acceder au message en cliquant sur le lien suivant : {U_VIEW_MESSAGE}
 _____________________________________________________________________
 
 De : {AUTHOR_NAME}

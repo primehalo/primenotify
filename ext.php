@@ -18,7 +18,6 @@ class ext extends \phpbb\extension\base
 				'primehalo.primenotify.notification.type.topic'	=> 'notification.type.topic',
 			);
 	private $db = null;
-	//private $phpbb_notifications = null;
 
     public function is_enableable()
     {
@@ -55,7 +54,7 @@ class ext extends \phpbb\extension\base
 			foreach (self::$notification_types as $our_type => $orig_type)
 			{
 				// Create our notification type entries for each equivalent default notification type that already exists, copying over the notify status setting
-				$sql = 'SELECT * FROM ' . USER_NOTIFICATIONS_TABLE . " WHERE item_type = '{$orig_type}' AND method = 'notification.method.email'";
+				$sql = 'SELECT * FROM ' . USER_NOTIFICATIONS_TABLE . " WHERE item_type = '" . $this->db->sql_escape($orig_type) . "' AND method = 'notification.method.email'";
 				$result = $this->db->sql_query($sql);
 				if ($result)
 				{
@@ -116,7 +115,7 @@ class ext extends \phpbb\extension\base
 			{
 				if (isset($notification_type_ids[$to]) && isset($notification_type_ids[$from]))
 				{
-					$sql = 'UPDATE ' . NOTIFICATIONS_TABLE . " SET notification_type_id = {$notification_type_ids[$to]} WHERE {$notification_type_ids[$from]}";
+					$sql = 'UPDATE ' . NOTIFICATIONS_TABLE . " SET notification_type_id = " . $this->db->sql_escape($notification_type_ids[$to]) . " WHERE notification_type_id = " . $this->db->sql_escape($notification_type_ids[$from]);
 					$this->db->sql_query($sql);
 				}
 			}

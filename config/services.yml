@@ -1,4 +1,14 @@
 services:
+    primehalo.primenotify.core:
+        class: primehalo\primenotify\core\prime_notify
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@language'
+            - '@text_formatter.utils'
+            - '@user'
+            - '@user_loader'
+
     primehalo.primenotify.main_listener:
         class: primehalo\primenotify\event\main_listener
         arguments:
@@ -21,6 +31,7 @@ services:
         calls:
             - [set_user_loader, ['@user_loader']]
             - [set_config, ['@config']]
+            - [set_prime_notify, ['@primehalo.primenotify.core']]
         tags:
             - { name: notification.type }
 
@@ -32,6 +43,7 @@ services:
         calls:
             - [set_user_loader, ['@user_loader']]
             - [set_config, ['@config']]
+            - [set_prime_notify, ['@primehalo.primenotify.core']]
         tags:
             - { name: notification.type }
 
@@ -43,5 +55,6 @@ services:
         calls:
             - [set_user_loader, ['@user_loader']]
             - [set_config, ['@config']]
+            - [set_prime_notify, ['@primehalo.primenotify.core']]
         tags:
             - { name: notification.type }

@@ -26,7 +26,6 @@ class main_module
 		global $phpbb_container;
 
 		$config		= $phpbb_container->get('config');		// @var \phpbb\config\config
-		$db			= $phpbb_container->get('dbal.conn');	// @var \phpbb\db\driver\driver_interface
 		$request	= $phpbb_container->get('request');		// @var \phpbb\request\request
 		$user		= $phpbb_container->get('user');		// @var \phpbb\user
 		$template	= $phpbb_container->get('template');	// @var \phpbb\template\template

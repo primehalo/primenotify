@@ -17,6 +17,13 @@ namespace primehalo\primenotify\notification\type;
 
 class pm extends \phpbb\notification\type\pm
 {
+	/** @var \primehalo\primenotify\core\prime_notify */
+	protected $prime_notify;
+	public function set_prime_notify(\primehalo\primenotify\core\prime_notify $prime_notify)
+	{
+		$this->prime_notify = $prime_notify;
+	}
+
 	/**
 	* Get notification type name
 	*
@@ -24,10 +31,7 @@ class pm extends \phpbb\notification\type\pm
 	*/
 	public function get_type()
 	{
-//-- mod: Prime Notify ------------------------------------------------------//
 		return 'primehalo.primenotify.notification.type.pm';
-//-- end: Prime Notify ------------------------------------------------------//
-//-- rem:		return '.notification.type.pm';
 	}
 
 	/**
@@ -47,12 +51,10 @@ class pm extends \phpbb\notification\type\pm
 	*/
 	public function get_email_template_variables()
 	{
-//-- mod: Prime Notify ------------------------------------------------------//
 		$template_vars = parent::get_email_template_variables();
 		$msg = utf8_decode_ncr(censor_text($this->get_data('prime_notify_text')));
 		$template_vars['MESSAGE'] = htmlspecialchars_decode($msg);
 		return $template_vars;
-//-- end: Prime Notify ------------------------------------------------------//
 	}
 
 	/**
@@ -60,11 +62,9 @@ class pm extends \phpbb\notification\type\pm
 	*/
 	public function create_insert_array($pm, $pre_create_data = array())
 	{
-//-- mod: Prime Notify ------------------------------------------------------//
-		$prime_notify = \primehalo\primenotify\core\prime_notify::Instance();
 		$user_data = $this->user_loader->get_user($this->user_id);
-		$this->set_data('prime_notify_text', $prime_notify->get_processed_text($pm, $user_data));
-//-- end: Prime Notify ------------------------------------------------------//
+		$this->set_data('prime_notify_text', $this->prime_notify->get_processed_text($pm, $user_data));
+
 		parent::create_insert_array($pm, $pre_create_data);
 	}
 }
