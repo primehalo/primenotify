@@ -51,6 +51,7 @@ class ext extends \phpbb\extension\base
 			}
 
 			// Now loop through each notification type that has an equivalent primenotify type so that we can make a primenotify copy of it
+			$this->db->sql_transaction('begin');
 			foreach (self::$notification_types as $our_type => $orig_type)
 			{
 				// Create our notification type entries for each equivalent default notification type that already exists, copying over the notify status setting
@@ -71,6 +72,7 @@ class ext extends \phpbb\extension\base
 				}
 
 			}
+			$this->db->sql_transaction('commit');
 
 			// Purge the cache to make sure our notification types show up on the UCP instead of the original types
 			$cache = $this->container->get('cache');
@@ -111,6 +113,7 @@ class ext extends \phpbb\extension\base
 			$this->db->sql_freeresult($result);
 
 			// Part 3/4: Change notification_type_id from our custom one to the equivalent default one
+			$this->db->sql_transaction('begin');
 			foreach (self::$notification_types as $from => $to)
 			{
 				if (isset($notification_type_ids[$to]) && isset($notification_type_ids[$from]))
@@ -118,10 +121,13 @@ class ext extends \phpbb\extension\base
 					$sql = 'UPDATE ' . NOTIFICATIONS_TABLE . " SET notification_type_id = " . $this->db->sql_escape($notification_type_ids[$to]) . " WHERE notification_type_id = " . $this->db->sql_escape($notification_type_ids[$from]);
 					$this->db->sql_query($sql);
 				}
+				unset($notification_type_ids[$to]);	// Remove default notification IDs so in the end we'll only be left with our custom notification IDs
 			}
+			$this->db->sql_transaction('commit');
 
 			// Part 4/4: All notifications should have been converted, but just in case lets try deleting all notifications still containing our custom notification IDs
-			$sql = 'DELETE t1 FROM ' . NOTIFICATIONS_TABLE . ' t1 JOIN ' . NOTIFICATION_TYPES_TABLE . ' t2 ON t1.notification_type_id = t2.notification_type_id AND t2.notification_type_name ' . $this->db->sql_like_expression('primehalo.primenotify.notification.type.' . $this->db->get_any_char());
+			$sql_in = array_values($notification_type_ids); // At this point $notification_type_ids contains only our custom notification IDs
+			$sql = 'DELETE FROM ' . NOTIFICATIONS_TABLE .  ' WHERE ' . $this->db->sql_in_set('notification_type_id', $sql_in);
 			$this->db->sql_query($sql);
 
 			// Delete our custom notification types from the Notification Types Table

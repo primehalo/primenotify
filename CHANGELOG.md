@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2020-03-26
+### Fixed
+- Attempted to fix an SQL error when installing and uninstalling on a Postgress database.
+
 ## [1.0.0] - 2020-01-13
 ### Changed
 - Changed the comment \phpbb\notification_manager to \phpbb\notification\manager in event/main_listener.php
