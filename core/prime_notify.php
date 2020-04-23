@@ -168,8 +168,8 @@ class prime_notify
 
 				if (!empty($this->myconfig['truncate']) && $this->myconfig['truncate'] > 0)
 				{
-					$this->orig_msg		= truncate_string($this->orig_msg, $this->myconfig['truncate'], $this->myconfig['truncate'], false, '...');
-					$this->clean_msg	= truncate_string($this->clean_msg, $this->myconfig['truncate'], $this->myconfig['truncate'], false, '...');
+					$this->orig_msg		= truncate_string($this->orig_msg, $this->myconfig['truncate'], $this->myconfig['truncate'], false, $this->language->lang('ELLIPSIS'));
+					$this->clean_msg	= truncate_string($this->clean_msg, $this->myconfig['truncate'], $this->myconfig['truncate'], false, $this->language->lang('ELLIPSIS'));
 				}
 			}
 		}
@@ -189,7 +189,7 @@ class prime_notify
 		}
 
 		// Fallback: convert all out-of-bounds characters that are currently not supported by utf8_bin in MySQL
-		$msg = (string)preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xef\xbf\xbd", $msg); // "\xef\xbf\xbd": UTF-8 REPLACEMENT CHARACTER
+		$msg = (string) preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xef\xbf\xbd", $msg); // "\xef\xbf\xbd": UTF-8 REPLACEMENT CHARACTER
 
 		return $msg;
 	}

@@ -125,7 +125,6 @@ class main_listener implements EventSubscriberInterface
 						|| !empty($user_notifications['primehalo.primenotify.notification.type.topic'][0]['notify']);
 		$user_pm	= !empty($user_notifications['primehalo.primenotify.notification.type.pm'][0]['notify']);
 
-
 		$show_enable_post	= ($this->config['primenotify_enable_post']	== prime_notify::USER_CHOICE) && $user_post;
 		$show_enable_pm		= ($this->config['primenotify_enable_pm']	== prime_notify::USER_CHOICE) && $user_pm;
 		$show_keep_bbcodes	= $this->config['primenotify_keep_bbcodes']	== prime_notify::USER_CHOICE;
@@ -193,7 +192,8 @@ class main_listener implements EventSubscriberInterface
 	*/
 	public function add_notifications($event)
 	{
-		switch ($event['notification_type_name']) {
+		switch ($event['notification_type_name'])
+		{
 			case 'notification.type.topic':
 				$event['notification_type_name'] = 'primehalo.primenotify.notification.type.topic';
 			break;

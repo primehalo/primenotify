@@ -19,11 +19,11 @@ class ext extends \phpbb\extension\base
 			);
 	private $db = null;
 
-    public function is_enableable()
-    {
-        $config = $this->container->get('config');
-        return phpbb_version_compare($config['version'], '3.2.1', '>=');
-    }
+	public function is_enableable()
+	{
+		$config = $this->container->get('config');
+		return phpbb_version_compare($config['version'], '3.2.1', '>=');
+	}
 
 	/**
 	* When enabling this extension we want to make a primenotify copy of each
@@ -36,10 +36,10 @@ class ext extends \phpbb\extension\base
 	* @return mixed Returns false after last step, otherwise temporary state
 	* @access public
 	*/
-    public function enable_step($old_state)
+	public function enable_step($old_state)
 	{
-        if ($old_state === false)
-        {
+		if ($old_state === false)
+		{
 			$this->db = !$this->db ? $this->container->get('dbal.conn') : $this->db;
 
 			// Grab all of our existing custom notifications (there shouldn't be any but we have to make sure otherwise we'll get an SQL error in the next step)
@@ -79,9 +79,9 @@ class ext extends \phpbb\extension\base
 			$cache->purge();
 
 			return 'cache_purged';
-        }
+		}
 
-        return parent::enable_step($old_state);
+		return parent::enable_step($old_state);
 	}
 
 	/**
@@ -94,8 +94,8 @@ class ext extends \phpbb\extension\base
 	 */
 	public function disable_step($old_state)
 	{
-        if ($old_state === false)
-        {
+		if ($old_state === false)
+		{
 			$this->db = !$this->db ? $this->container->get('dbal.conn') : $this->db;
 
 			// Convert all existing custom notifications into default notifications
@@ -143,8 +143,8 @@ class ext extends \phpbb\extension\base
 			$cache->purge();
 
 			return 'cache_purged';
-        }
+		}
 
-        return parent::disable_step($old_state);
+		return parent::disable_step($old_state);
 	}
 }
