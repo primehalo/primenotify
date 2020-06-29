@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Inserts the content of a post or private messages into notification e-mails for the phpBB 3.2 forum software. Options allow BBCodes to be kept or removed and notification emails to be sent after every new post or just the first new post.
+Inserts the content of a post or private messages into notification e-mails for the phpBB 3.2/3.3 forum software. Options allow BBCodes to be kept or removed and notification emails to be sent after every new post or just the first new post.
 
 ## Installation
 

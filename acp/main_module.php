@@ -90,11 +90,11 @@ class main_module
 			'PRIMENOTIFY_ENABLED'		=> prime_notify::ENABLED,
 			'PRIMENOTIFY_DISABLED'		=> prime_notify::DISABLED,
 			'PRIMENOTIFY_USER_CHOICE'	=> prime_notify::USER_CHOICE,
-			'PRIMENOTIFY_ENABLE_POST'	=> isset($config['primenotify_enable_post']) ? $config['primenotify_enable_post'] : $defaults['enable_post'],
-			'PRIMENOTIFY_ENABLE_PM'		=> isset($config['primenotify_enable_pm']) ? $config['primenotify_enable_pm'] : $defaults['enable_pm'],
-			'PRIMENOTIFY_KEEP_BBCODES'	=> isset($config['primenotify_keep_bbcodes']) ? $config['primenotify_keep_bbcodes'] : $defaults['keep_bbcodes'],
-			'PRIMENOTIFY_ALWAYS_SEND'	=> isset($config['primenotify_always_send']) ? $config['primenotify_always_send'] : $defaults['always_send'],
-			'PRIMENOTIFY_TRUNCATE'		=> isset($config['primenotify_truncate']) ? $config['primenotify_truncate'] : $defaults['truncate'],
+			'PRIMENOTIFY_ENABLE_POST'	=> $config['primenotify_enable_post'],
+			'PRIMENOTIFY_ENABLE_PM'		=> $config['primenotify_enable_pm'],
+			'PRIMENOTIFY_KEEP_BBCODES'	=> $config['primenotify_keep_bbcodes'],
+			'PRIMENOTIFY_ALWAYS_SEND'	=> $config['primenotify_always_send'],
+			'PRIMENOTIFY_TRUNCATE'		=> $config['primenotify_truncate'],
 			'U_ACTION'					=> $this->u_action,
 		));
 	}

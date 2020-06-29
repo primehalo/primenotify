@@ -44,6 +44,7 @@ $lang = array_merge($lang, array(
 	'ACP_PRIMENOTIFY_SETTINGS_SAVED'		=> 'Einstellungen wurden erfolgreich gespeichert!',
 	'ACP_PRIMENOTIFY_SETTINGS_LOG'			=> '<strong>Änderungen der Prime Notify Einstllungen</strong>',
 	'ACP_PRIMENOTIFY_USER_CHOICE'			=> 'Auswahl durch Benutzer',
+	'ACP_PRIMENOTIFY_USER_CHOICE_MSG'		=> 'User’s Choice options will be shown in the <strong>Edit global settings</strong> section of the <strong>Board preferences</strong> tab on the <strong>User Control Panel</strong>, when enabled.',
 
 	// Settings
 	'ACP_PRIMENOTIFY_ENABLE_POST'			=> 'Für Beiträge aktivieren',

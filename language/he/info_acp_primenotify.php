@@ -44,6 +44,7 @@ $lang = array_merge($lang, array(
 	'ACP_PRIMENOTIFY_SETTINGS_SAVED'		=> 'ההגדרות של התראות פריים נשמרו בהצלחה!',
 	'ACP_PRIMENOTIFY_SETTINGS_LOG'			=> '<strong>הגדרות של התראות פריים שונו</strong>',
 	'ACP_PRIMENOTIFY_USER_CHOICE'			=> 'בחירת המשתמש',
+	'ACP_PRIMENOTIFY_USER_CHOICE_MSG'		=> 'User’s Choice options will be shown in the <strong>Edit global settings</strong> section of the <strong>Board preferences</strong> tab on the <strong>User Control Panel</strong>, when enabled.',
 
 	// Settings
 	'ACP_PRIMENOTIFY_ENABLE_POST'			=> 'הפעל להודעות',

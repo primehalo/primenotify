@@ -136,7 +136,7 @@ class ext extends \phpbb\extension\base
 
 			// Delete our custom notification types from the User Notifications Table
 			$sql = 'DELETE FROM ' . USER_NOTIFICATIONS_TABLE . ' WHERE item_type ' . $this->db->sql_like_expression('primehalo.primenotify.notification.type.' . $this->db->get_any_char());
-			$result = $this->db->sql_query($sql);
+			$this->db->sql_query($sql);
 
 			// Clear the cache
 			$cache = $this->container->get('cache');

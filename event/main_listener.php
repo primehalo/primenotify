@@ -250,7 +250,6 @@ class main_listener implements EventSubscriberInterface
 		$forum_id	= $event['forum_id'];
 		$topic_id	= $event['topic_id'];
 		$post_time	= $event['post_time'];
-		$user_id	= $event['user_id'];
 		$should_markread = $event['should_markread'];
 
 		// The below code is from the markread() function in includes/functions.php
@@ -264,13 +263,8 @@ class main_listener implements EventSubscriberInterface
 		{
 			if (empty($forum_id))
 			{
-				// Mark all forums read (index page)
-				/* @var $phpbb_notifications \phpbb\notification\manager */
-				#$phpbb_notifications = $phpbb_container->get('notification_manager');
-				$phpbb_notifications = $this->notification_manager;
-
 				// Mark all topic notifications read for this user
-				$phpbb_notifications->mark_notifications(array(
+				$this->notification_manager->mark_notifications(array(
 					'primehalo.primenotify.notification.type.topic',
 					#'notification.type.quote',
 					#'notification.type.bookmark',
@@ -293,10 +287,7 @@ class main_listener implements EventSubscriberInterface
 				$forum_id = array_unique($forum_id);
 			}
 
-			/* @var $phpbb_notifications \phpbb\notification\manager */
-			$phpbb_notifications = $this->notification_manager;	# $phpbb_container->get('notification_manager');
-
-			$phpbb_notifications->mark_notifications_by_parent(array(
+			$this->notification_manager->mark_notifications_by_parent(array(
 				'primehalo.primenotify.notification.type.topic',
 				#'notification.type.approve_topic',
 			), $forum_id, $user->data['user_id'], $post_time);
@@ -308,16 +299,13 @@ class main_listener implements EventSubscriberInterface
 				return;
 			}
 
-			/* @var $phpbb_notifications \phpbb\notification\manager */
-			$phpbb_notifications = $this->notification_manager;	# $phpbb_container->get('notification_manager');
-
 			// Mark post notifications read for this user in this topic
-			$phpbb_notifications->mark_notifications(array(
+			$this->notification_manager->mark_notifications(array(
 				'primehalo.primenotify.notification.type.topic',
 				#'notification.type.approve_topic',
 			), $topic_id, $user->data['user_id'], $post_time);
 
-			$phpbb_notifications->mark_notifications_by_parent(array(
+			$this->notification_manager->mark_notifications_by_parent(array(
 				#'notification.type.quote',
 				#'notification.type.bookmark',
 				'primehalo.primenotify.notification.type.post',
@@ -348,10 +336,7 @@ class main_listener implements EventSubscriberInterface
 
 		// The below code to mark the PM notification as read was taken from
 		// functions_privmsgs.php's update_unread_status() function.
-
-		/* @var $phpbb_notifications \phpbb\notification\manager */
-		$phpbb_notifications = $this->notification_manager;	#$phpbb_container->get('notification_manager');
-		$phpbb_notifications->mark_notifications('primehalo.primenotify.notification.type.pm', $msg_id, $user_id);
+		$this->notification_manager->mark_notifications('primehalo.primenotify.notification.type.pm', $msg_id, $user_id);
 	}
 
 	/**
