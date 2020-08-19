@@ -10,8 +10,6 @@
 
 namespace primehalo\primenotify\migrations;
 
-use \primehalo\primenotify\core\prime_notify;
-
 class version_101 extends \phpbb\db\migration\migration
 {
 	/**
