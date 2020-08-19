@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Inserts the content of a post or private messages into notification e-mails. Options allow long messages to be truncated, BBCodes to be kept or removed, and notification emails to be sent after every new post or just the first new post.",
 	"homepage": "https://github.com/primehalo/primenotify",
-	"version": "1.0.3",
-	"time": "2020-06-29",
+	"version": "1.0.4",
+	"time": "2020-08-19",
 	"license": "GPL-2.0-only",
 	"authors": [
 		{
