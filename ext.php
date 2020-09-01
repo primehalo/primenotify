@@ -126,9 +126,12 @@ class ext extends \phpbb\extension\base
 			$this->db->sql_transaction('commit');
 
 			// Part 4/4: All notifications should have been converted, but just in case lets try deleting all notifications still containing our custom notification IDs
-			$sql_in = array_values($notification_type_ids); // At this point $notification_type_ids contains only our custom notification IDs
-			$sql = 'DELETE FROM ' . NOTIFICATIONS_TABLE .  ' WHERE ' . $this->db->sql_in_set('notification_type_id', $sql_in);
-			$this->db->sql_query($sql);
+			if (!empty($notification_type_ids))
+			{
+				$sql_in = array_values($notification_type_ids); // At this point $notification_type_ids contains only our custom notification IDs
+				$sql = 'DELETE FROM ' . NOTIFICATIONS_TABLE .  ' WHERE ' . $this->db->sql_in_set('notification_type_id', $sql_in);
+				$this->db->sql_query($sql);
+			}
 
 			// Delete our custom notification types from the Notification Types Table
 			$sql = 'DELETE FROM ' . NOTIFICATION_TYPES_TABLE . ' WHERE notification_type_name ' . $this->db->sql_like_expression('primehalo.primenotify.notification.type.' . $this->db->get_any_char());

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2020-09-01
+### Fixed
+- Potential SQL error that could occur after disabling the extension and attempting to delete the extension data. This error would preventing the extension data from being deleted and the extension from being uninstalled.
+
 ## [1.0.4] - 2020-08-19
 ### Changed
 - Changed the depends_on() method back to what it was in version 1.0.0, where it was requiring phpBB v3.2.1, and added a new migration file with the sole purpose of having the depends_on() method require phpBB v3.2.2. This change should not affect anyone, it is only for phpBB DB bureaucracy as they don't allow any changes to migration files that have already been approved.
