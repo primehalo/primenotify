@@ -11,7 +11,7 @@
 namespace primehalo\primenotify\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use \primehalo\primenotify\core\prime_notify;
+use primehalo\primenotify\core\prime_notify;
 
 /**
 * Event listener

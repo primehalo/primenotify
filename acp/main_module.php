@@ -10,7 +10,7 @@
 
 namespace primehalo\primenotify\acp;
 
-use \primehalo\primenotify\core\prime_notify;
+use primehalo\primenotify\core\prime_notify;
 
 /**
 * Prime Notify ACP module.
