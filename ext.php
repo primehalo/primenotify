@@ -16,6 +16,7 @@ class ext extends \phpbb\extension\base
 				'primehalo.primenotify.notification.type.pm'	=> 'notification.type.pm',
 				'primehalo.primenotify.notification.type.post'	=> 'notification.type.post',
 				'primehalo.primenotify.notification.type.topic'	=> 'notification.type.topic',
+				'primehalo.primenotify.notification.type.forum'	=> 'notification.type.forum',
 			);
 	private $db = null;
 
@@ -43,19 +44,20 @@ class ext extends \phpbb\extension\base
 			$this->db = !$this->db ? $this->container->get('dbal.conn') : $this->db;
 
 			// Grab all of our existing custom notifications (there shouldn't be any but we have to make sure otherwise we'll get an SQL error in the next step)
-			$sql = 'SELECT * FROM ' . USER_NOTIFICATIONS_TABLE . ' WHERE item_type ' . $this->db->sql_like_expression('primehalo.primenotify.notification.type.' . $this->db->get_any_char());
+			$sql = 'SELECT item_type, user_id FROM ' . USER_NOTIFICATIONS_TABLE . ' WHERE item_type ' . $this->db->sql_like_expression('primehalo.primenotify.notification.type.' . $this->db->get_any_char());
 			$result = $this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result))
 			{
 				$user_ids_per_type[$row['item_type']][] = $row['user_id'];
 			}
+			$this->db->sql_freeresult($result);
 
 			// Now loop through each notification type that has an equivalent primenotify type so that we can make a primenotify copy of it
 			$this->db->sql_transaction('begin');
 			foreach (self::$notification_types as $our_type => $orig_type)
 			{
 				// Create our notification type entries for each equivalent default notification type that already exists, copying over the notify status setting
-				$sql = 'SELECT * FROM ' . USER_NOTIFICATIONS_TABLE . " WHERE item_type = '" . $this->db->sql_escape($orig_type) . "' AND method = 'notification.method.email'";
+				$sql = 'SELECT user_id, notify FROM ' . USER_NOTIFICATIONS_TABLE . " WHERE item_type = '" . $this->db->sql_escape($orig_type) . "' AND method = 'notification.method.email'";
 				$result = $this->db->sql_query($sql);
 				if ($result)
 				{
@@ -101,7 +103,7 @@ class ext extends \phpbb\extension\base
 			// Convert all existing custom notifications into default notifications
 			// Part 1/4: Get the notification type IDs so we know which notification IDs to find and what to convert them to
 			$sql_in = array_merge(array_values(self::$notification_types), array_keys(self::$notification_types));
-			$sql = 'SELECT * FROM ' . NOTIFICATION_TYPES_TABLE . ' WHERE ' . $this->db->sql_in_set('notification_type_name', $sql_in);
+			$sql = 'SELECT notification_type_id, notification_type_name FROM ' . NOTIFICATION_TYPES_TABLE . ' WHERE ' . $this->db->sql_in_set('notification_type_name', $sql_in);
 			$result = $this->db->sql_query($sql);
 
 			// Part 2/4: Organize the notification IDs for easy access, using the type_name as the key and the type_id as the value

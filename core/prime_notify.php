@@ -229,7 +229,7 @@ class prime_notify
 	* Determine if the user should be notified even if they've already
 	* received a previous notification and have not yet visited the topic.
 	*
-	* @param $user_id Optional user ID
+	* @param int $user_id Optional user ID
 	* @return boolean
 	* @access public
 	*/
@@ -254,17 +254,17 @@ class prime_notify
 			if (strpos($sql, 'FROM ' . FORUMS_WATCH_TABLE))
 			{
 				$sql = 'SELECT w.user_id as user_id
-					FROM ' . FORUMS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
+					FROM ' . FORUMS_WATCH_TABLE . ' w INNER JOIN ' . USERS_TABLE . ' u ON u.user_id = w.user_id
 					WHERE w.forum_id = ' . (int) $post['forum_id'] . '
-						AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
+						AND (w.notify_status = ' . NOTIFY_YES . ' OR u.user_primenotify_always_send = ' . self::ENABLED . ')
 						AND w.user_id <> ' . (int) $post['poster_id'];
 			}
 			else
 			{
 				$sql = 'SELECT w.user_id as user_id
-					FROM ' . TOPICS_WATCH_TABLE . ' w, ' . USERS_TABLE . ' u
+					FROM ' . TOPICS_WATCH_TABLE . ' w INNER JOIN ' . USERS_TABLE . ' u ON u.user_id = w.user_id
 					WHERE w.topic_id = ' . (int) $post['topic_id'] . '
-						AND (w.notify_status = ' . NOTIFY_YES . ' OR (u.user_id = w.user_id AND u.user_primenotify_always_send = ' . self::ENABLED . '))
+						AND (w.notify_status = ' . NOTIFY_YES . ' OR u.user_primenotify_always_send = ' . self::ENABLED . ')
 						AND w.user_id <> ' . (int) $post['poster_id'];
 			}
 		}

@@ -56,21 +56,7 @@ class post extends \phpbb\notification\type\post
 				AND notify_status = ' . NOTIFY_YES . '
 				AND user_id <> ' . (int) $post['poster_id'];
 
-		$this->prime_notify->alter_post_sql($sql, $post);
-
-		$result = $this->db->sql_query($sql);
-		while ($row = $this->db->sql_fetchrow($result))
-		{
-			$users[] = (int) $row['user_id'];
-		}
-		$this->db->sql_freeresult($result);
-
-		$sql = 'SELECT user_id
-			FROM ' . FORUMS_WATCH_TABLE . '
-			WHERE forum_id = ' . (int) $post['forum_id'] . '
-				AND notify_status = ' . NOTIFY_YES . '
-				AND user_id <> ' . (int) $post['poster_id'];
-
+		// Alter query to check for Always-Send preference, almost everything else is the same as the original function.
 		$this->prime_notify->alter_post_sql($sql, $post);
 
 		$result = $this->db->sql_query($sql);

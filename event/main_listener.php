@@ -122,7 +122,8 @@ class main_listener implements EventSubscriberInterface
 		// Get the user's current email notification settings as our settings are useless if they're not enabled
 		$user_notifications = $this->get_user_notifications($user_id);
 		$user_post	= !empty($user_notifications['primehalo.primenotify.notification.type.post'][0]['notify'])
-						|| !empty($user_notifications['primehalo.primenotify.notification.type.topic'][0]['notify']);
+						|| !empty($user_notifications['primehalo.primenotify.notification.type.topic'][0]['notify'])
+						|| !empty($user_notifications['primehalo.primenotify.notification.type.forum'][0]['notify']);
 		$user_pm	= !empty($user_notifications['primehalo.primenotify.notification.type.pm'][0]['notify']);
 
 		$show_enable_post	= ($this->config['primenotify_enable_post']	== prime_notify::USER_CHOICE) && $user_post;
@@ -194,6 +195,9 @@ class main_listener implements EventSubscriberInterface
 	{
 		switch ($event['notification_type_name'])
 		{
+			case 'notification.type.forum':
+				$event['notification_type_name'] = 'primehalo.primenotify.notification.type.forum';
+			break;
 			case 'notification.type.topic':
 				$event['notification_type_name'] = 'primehalo.primenotify.notification.type.topic';
 			break;
@@ -228,6 +232,7 @@ class main_listener implements EventSubscriberInterface
 		$notifications_data = $event['notifications_data'];
 		$notifications_data[] = array('item_type'	=> 'primehalo.primenotify.notification.type.post', 'method' => 'notification.method.email');
 		$notifications_data[] = array('item_type'	=> 'primehalo.primenotify.notification.type.topic', 'method' => 'notification.method.email');
+		$notifications_data[] = array('item_type'	=> 'primehalo.primenotify.notification.type.forum', 'method' => 'notification.method.email');
 		$event['notifications_data'] = $notifications_data;
 	}
 
@@ -271,6 +276,7 @@ class main_listener implements EventSubscriberInterface
 					'primehalo.primenotify.notification.type.post',
 					#'notification.type.approve_topic',
 					#'notification.type.approve_post',
+					'primehalo.primenotify.notification.type.forum',
 				), false, $user->data['user_id'], $post_time);
 
 			}
@@ -291,6 +297,14 @@ class main_listener implements EventSubscriberInterface
 				'primehalo.primenotify.notification.type.topic',
 				#'notification.type.approve_topic',
 			), $forum_id, $user->data['user_id'], $post_time);
+
+			$this->notification_manager->mark_notifications_by_parent(array(
+				#'notification.type.quote',
+				#'notification.type.bookmark',
+				'primehalo.primenotify.notification.type.post',
+				#'notification.type.approve_post',
+				'primehalo.primenotify.notification.type.forum',
+			), $topic_id, $user->data['user_id'], $post_time);
 		}
 		else if ($mode == 'topic')
 		{
@@ -310,6 +324,7 @@ class main_listener implements EventSubscriberInterface
 				#'notification.type.bookmark',
 				'primehalo.primenotify.notification.type.post',
 				#'notification.type.approve_post',
+				'primehalo.primenotify.notification.type.forum',
 			), $topic_id, $user->data['user_id'], $post_time);
 		}
 	}

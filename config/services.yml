@@ -23,6 +23,18 @@ services:
         tags:
             - { name: event.listener }
 
+    primehalo.primenotify.notification.type.post:
+        class: primehalo\primenotify\notification\type\post
+        decorates: notification.type.post
+        shared: false
+        parent: notification.type.base
+        calls:
+            - [set_user_loader, ['@user_loader']]
+            - [set_config, ['@config']]
+            - [set_prime_notify, ['@primehalo.primenotify.core']]
+        tags:
+            - { name: notification.type }
+
     primehalo.primenotify.notification.type.topic:
         class: primehalo\primenotify\notification\type\topic
         decorates: notification.type.topic
@@ -35,11 +47,11 @@ services:
         tags:
             - { name: notification.type }
 
-    primehalo.primenotify.notification.type.post:
-        class: primehalo\primenotify\notification\type\post
-        decorates: notification.type.post
+    primehalo.primenotify.notification.type.forum:
+        class: primehalo\primenotify\notification\type\forum
+        decorates: notification.type.forum
         shared: false
-        parent: notification.type.base
+        parent: notification.type.post
         calls:
             - [set_user_loader, ['@user_loader']]
             - [set_config, ['@config']]
