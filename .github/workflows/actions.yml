@@ -29,7 +29,7 @@ jobs:
           cp -R . ../tmp
     - name: Actions Setup - Clone phpBB
       run: |
-          git clone --depth=1 git://github.com/phpbb/phpbb.git phpBB3 --branch=$PHPBB_BRANCH
+          git clone --depth=1 https://github.com/phpbb/phpbb.git phpBB3 --branch=$PHPBB_BRANCH
     - name: Actions Setup - Composer Install/Remove/Require
       run: |
           cd phpBB3/phpBB
