@@ -20,7 +20,7 @@
 	"extra": {
 		"display-name": "Prime Notify",
 		"soft-require": {
-		   "phpbb/phpbb": ">=3.2.2"
+		   "phpbb/phpbb": ">=3.3.2"
 		},
 		"version-check": {
 		    "host": "www.absoluteanime.com",
