@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.7] - 2023-04-16
 ### Fixed
-- Notifications would fail for User's Choice if the DB dropped support for the deprecated comma JOIN syntax 
+- Notifications would fail for User's Choice if the DB dropped support for the deprecated comma JOIN syntax
 - topic_notify.txt is wrongly used for forum subscriptions (phpBB3-16544 fixed in phpBB 3.3.2)
+
+### Changed
+- Raised minimum required phpBB version from 3.2.2 to 3.3.2
 
 ## [1.0.6] - 2023-01-03
 ### Added
