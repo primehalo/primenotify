@@ -1,6 +1,6 @@
-Subject: Nouveau message prive : {SUBJECT}
+Subject: Nouveau message privé : {SUBJECT}
 
-Bonjour {USERNAME}, vous avez recu un nouveau message prive sur votre compte sur le site « {SITENAME} ». Vous pouvez acceder au message en cliquant sur le lien suivant : {U_VIEW_MESSAGE}
+Bonjour {USERNAME}, tu as recu un nouveau message privé sur le site « {SITENAME} ». Tu peux accéder au message en cliquant sur le lien suivant : {U_VIEW_MESSAGE}
 _____________________________________________________________________
 
 De : {AUTHOR_NAME}
@@ -9,5 +9,5 @@ Message :
 {MESSAGE}
 _____________________________________________________________________
 
-Vous avez demande a etre notifie sur cet evenement ; souvenez-vous qu'il est toujours possible de ne plus recevoir ces notifications en modifiant le parametre approprie dans votre profil.
+Tu as demandé à être notifié sur cet événement; souviens-toi qu'il est toujours possible de ne plus recevoir ces notifications en modifiant le paramètre approprié dans ton profil.
 {EMAIL_SIG}
