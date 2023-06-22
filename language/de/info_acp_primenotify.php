@@ -57,6 +57,6 @@ $lang = array_merge($lang, array(
 	'ACP_PRIMENOTIFY_ALWAYS_SEND'			=> 'Immer Benachrichtigen',
 	'ACP_PRIMENOTIFY_ALWAYS_SEND_EXPLAIN'	=> '"Ja" sendet bei jedem neuen Beitrag in abonnierten Thema eine Benachrichtigung, unabhängig davon ob Du das Thema zwischenzeitlich besucht hast oder nicht. <br>
                                                 "Nein" sendet eine neue Benachrichtigung in dem Thema nur dann, wenn Du das Thema besucht hast.',
-	'ACP_PRIMENOTIFY_TRUNCATE'				=> 'Min. Länge des Beitrages/der Nachricht',
-	'ACP_PRIMENOTIFY_TRUNCATE_EXPLAIN'		=> 'Berücksichtigt nur Beiträge/Nachrichten mit mehr Zeichen als der genannten Anzahl. Setze auf "0" für kein Limit.',
+	'ACP_PRIMENOTIFY_TRUNCATE'				=> 'Länge des Beitrages/der Nachricht limitieren',
+	'ACP_PRIMENOTIFY_TRUNCATE_EXPLAIN'		=> 'Schneidet Beiträge/Nachrichten mit mehr Zeichen als der genannten Anzahl ab. Setze auf "0" für kein Limit.',
 ));
