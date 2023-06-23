@@ -8,6 +8,6 @@ Nachricht:
 {MESSAGE}
 _____________________________________________________________________
 
-<!-- IF S_VISIT_MSG -->Bis zum erneuten Besuch des Forum werden keine weiteren Benachrichtigungen gesendet. <!-- ENDIF-->Wenn du das Forum nicht mehr beobachten willst, dann klicke den "nicht mehr beobachten" Link im obigen Forum, oder klicke folgenden Link:
+<!-- IF S_VISIT_MSG -->Bis zum erneuten Besuch des Forums werden keine weiteren Benachrichtigungen gesendet. <!-- ENDIF-->Wenn du das Forum nicht mehr beobachten willst, dann klicke den "nicht mehr beobachten" Link im obigen Forum, oder klicke folgenden Link:
 {U_STOP_WATCHING_FORUM}
 {EMAIL_SIG}
